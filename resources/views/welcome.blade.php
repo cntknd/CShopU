@@ -122,7 +122,7 @@
       line-height: 1.2;
       margin-bottom: 2rem;
       color: #ffffff;
-      transition: color 0.5s ease;
+      transition: color 0.5s ease; 
     }
 
     .typed-wrapper {
