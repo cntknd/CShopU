@@ -33,6 +33,24 @@ class ProdCtrl extends Controller
      */
     public function store(Request $request)
 {
+    $request->validate([
+        'pname' => 'required|string|max:255',
+        'desc' => 'nullable|string',
+        'price' => 'required|numeric',
+        'supplier_price' => 'required|numeric',
+        'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        'has_size' => 'required|boolean',
+        'category_id' => 'required|exists:categories,id',
+        'stock' => 'nullable|integer|min:0',
+        'sizes' => 'nullable|array',
+        'sizes.*' => 'integer|min:0',
+    ]);
+
+    try {
+        $path = $request->file('image')->store('images', 'public');
+    } catch (\Exception $e) {
+        return redirect()->back()->with('error', 'Failed to upload image. Please try again.');
+    }
     $path = $request->file('image')->store('images', 'public');
     $filename = basename($path);
 
@@ -153,18 +171,22 @@ class ProdCtrl extends Controller
 
     // Check if image is uploaded
     if ($request->hasFile('image')) {
-        $path = $request->file('image')->store('images', 'public');
-        $filename = basename($path);
+        try {
+            $path = $request->file('image')->store('images', 'public');
+            $filename = basename($path);
 
-        $storagePath = storage_path('app/public/' . $path);
-        $publicPath = public_path('images/' . $filename);
+            $storagePath = storage_path('app/public/' . $path);
+            $publicPath = public_path('images/' . $filename);
 
-        if (!file_exists(public_path('images'))) {
-            mkdir(public_path('images'), 0755, true);
+            if (!file_exists(public_path('images'))) {
+                mkdir(public_path('images'), 0755, true);
+            }
+
+            copy($storagePath, $publicPath);
+            $product->image = $filename;
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Failed to upload image. Please try again.');
         }
-
-        copy($storagePath, $publicPath);
-        $product->image = $filename;
     }
 
     $product->save();
