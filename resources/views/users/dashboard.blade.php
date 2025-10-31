@@ -3,24 +3,51 @@
 
 @section('content')
 
+<style>
+    /* Minimal responsive size adjustments only - preserving your design */
+    .hero {
+        padding: 6rem 10% !important;
+        min-height: 60vh !important;
+        background-blend-mode: overlay;
+    }
+    .hero-title {
+        font-size: 70px;
+        font-weight: 900;
+        color: #FFD700;
+        text-shadow: 2px 2px 8px rgba(128,0,0,0.8);
+        line-height: 1;
+    }
+    @media (max-width: 1024px) {
+        .hero { padding: 4rem 6% !important; }
+        .hero-title { font-size: 48px; }
+    }
+    @media (max-width: 640px) {
+        .hero { padding: 2.5rem 4% !important; }
+        .hero-title { font-size: 28px; }
+    }
+
+    /* Top product image minor responsive tweak */
+    .top-prod-img { width: 6rem; height: 6rem; object-fit: cover; }
+    @media (max-width:640px) { .top-prod-img { width: 5rem; height: 5rem; } }
+</style>
+
 <!-- Hero Section (homepage style) -->
-<section class="hero relative text-center text-white" style="min-height:60vh; padding:6rem 10%; background: linear-gradient(rgba(128,0,0,0.45), rgba(128,0,0,0.45)), url('{{ asset("images/building.jpg") }}') center/cover no-repeat; background-blend-mode: overlay;">
-    <div class="max-w-3xl mx-auto">
-   <h1 style="font-size:70px; font-weight:900; color:#FFD700; text-shadow:2px 2px 8px rgba(128,0,0,0.8);" class="mb-4">
-  Welcome back, {{ Auth::user()->first_name }}
-</h1>
+<section class="hero relative text-center text-white bg-cover bg-center" style="background-image: linear-gradient(rgba(128,0,0,0.45), rgba(128,0,0,0.45)), url('{{ asset("images/building.jpg") }}'); background-blend-mode: overlay;">
+    <div class="max-w-4xl mx-auto px-4 py-20 sm:py-28 lg:py-36">
+        <h1 class="hero-title mb-4 text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-extrabold text-yellow-400 leading-tight drop-shadow-lg">
+            Welcome back, <span class="block sm:inline">{{ Auth::user()->first_name }}</span>
+        </h1>
 
+        <p class="hero-subtitle text-base sm:text-lg md:text-2xl font-semibold mb-6 text-white max-w-2xl mx-auto">
+            One Stop Shop for your Campus Needs
+            <span class="typed-wrapper">
+                <span id="typed-text" class="typed-text"></span>
+            </span>
+        </p>
 
-
-
-    <p class="hero-subtitle text-2xl font-semibold mb-6 text-white">
-  One Stop Shop for your Campus Needs
-  <span class="typed-wrapper">
-      <span id="typed-text" class="typed-text"></span>
-  </span>
-</p>
-
-        <a href="{{ route('user.products.index') }}" class="inline-block bg-yellow-400 text-gray-900 font-semibold py-3 px-6 rounded-full shadow-md hover:shadow-lg transition-transform hover:scale-105">🛒 Shop Now</a>
+        <a href="{{ route('user.products.index') }}" class="inline-block bg-yellow-400 text-gray-900 font-semibold py-2.5 px-5 sm:py-3 sm:px-6 rounded-full shadow-md hover:shadow-lg transition-transform hover:scale-105 text-sm sm:text-base">
+            🛒 Shop Now
+        </a>
     </div>
 </section>
 
@@ -52,19 +79,21 @@
         @endphp
 
         @if($topProducts->isNotEmpty())
-            <div class="mb-6">
-                <h3 class="text-lg font-bold text-center text-red-800 mb-3">Top 3 Best Sellers</h3>
-                <div class="max-w-4xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-4">
-                    @php $labels = ['1', '2', '3']; @endphp
-                    @foreach($topProducts as $index => $tp)
-                        <div class="bg-white rounded-lg p-3 shadow-sm flex flex-col items-center text-center">
-                            <div class="text-sm font-semibold text-yellow-500">{{ $labels[$index] ?? ($index+1) }}</div>
-                            <img src="{{ asset('images/'.$tp->image) }}" alt="{{ $tp->name }}" class="w-24 h-24 object-cover rounded my-2">
-                            <div class="font-semibold text-sm">{{ $tp->name }}</div>
-                            <div class="text-red-700 font-bold">₱{{ number_format($tp->price,2) }}</div>
-                            <a href="{{ route('user.products.show', $tp->id) }}" class="mt-2 text-sm text-yellow-600">View</a>
-                        </div>
-                    @endforeach
+            <div class="mb-8">
+                <h3 class="text-xl font-bold text-center text-red-800 mb-4">Top 3 Best Sellers</h3>
+                <div class="max-w-5xl mx-auto px-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        @php $labels = ['1', '2', '3']; @endphp
+                        @foreach($topProducts as $index => $tp)
+                            <div class="bg-white rounded-lg p-4 shadow-sm flex flex-col items-center text-center">
+                                <div class="text-sm font-semibold text-yellow-500 mb-2">{{ $labels[$index] ?? ($index+1) }}</div>
+                                <img src="{{ asset('images/'.$tp->image) }}" alt="{{ $tp->name }}" class="w-24 h-24 sm:w-32 sm:h-32 md:w-36 md:h-36 object-cover rounded mb-3 top-prod-img">
+                                <div class="font-semibold text-sm truncate w-40">{{ $tp->name }}</div>
+                                <div class="text-red-700 font-bold mt-1">₱{{ number_format($tp->price,2) }}</div>
+                                <a href="{{ route('user.products.show', $tp->id) }}" class="mt-3 text-sm text-yellow-600 font-semibold">View Details</a>
+                            </div>
+                        @endforeach
+                    </div>
                 </div>
             </div>
         @endif
@@ -76,7 +105,7 @@
                     <div class="p-4 text-left">
                         <h3 class="font-semibold text-lg">{{ $prod->name }}</h3>
                         <div class="price text-red-700 font-bold mt-1">₱{{ number_format($prod->price, 2) }}</div>
-                        <a href="{{ route('user.products.show', $prod->id) }}" class="inline-block mt-3 text-sm text-yellow-600 font-semibold">View</a>
+                        <a href="{{ route('user.products.show', $prod->id) }}" class="inline-block mt-3 text-sm text-yellow-600 font-semibold">View Details</a>
                     </div>
                 </div>
             @endforeach

@@ -105,6 +105,11 @@
             <i class="bi bi-shop mr-1"></i>{{ __('Products') }}
         </x-responsive-nav-link>
 
+        {{-- Orders link for mobile menu (stacked under Products) --}}
+        <x-responsive-nav-link :href="route('orders.index')" :active="request()->routeIs('orders.*')" class="text-white hover:bg-red-700 font-bold">
+            <i class="bi bi-bag mr-1"></i>{{ __('Orders') }}
+        </x-responsive-nav-link>
+
                 <x-responsive-nav-link :href="route('users.feedback.create')" :active="request()->routeIs('users.feedback.create')" class="text-white hover:bg-red-700 font-bold">
 
             <i class="bi bi-chat-dots mr-1"></i>{{ __('Feedback') }}

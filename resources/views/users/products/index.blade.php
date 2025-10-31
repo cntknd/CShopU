@@ -110,12 +110,11 @@
         <div class="bg-white rounded-lg overflow-hidden border border-gray-200 hover:shadow-lg transition-shadow duration-200">
 
             <!-- Product Image -->
-            <div class="relative w-full bg-gray-50" style="padding-top: 100%;">
+            <div class="w-full bg-gray-50 h-64 sm:h-48 md:h-40 lg:h-48">
                 <img 
                     src="{{ asset('images/'.$product->image) }}" 
                     alt="{{ $product->name }}" 
-                    class="absolute inset-0 w-full h-full object-cover"
-                    style="object-fit: cover;"
+                    class="w-full h-full object-cover"
                 />
                 @php
                     $totalStock = $product->sizes->count() > 0 
@@ -155,6 +154,11 @@
                             Out of stock
                         @endif
                     </span>
+                </div>
+
+                <!-- View + Add to Cart Buttons -->
+                <div class="mb-3">
+                    <a href="{{ route('user.products.show', $product->id) }}" class="text-sm text-blue-600 hover:underline inline-block mb-2">View</a>
                 </div>
 
                 <!-- Add to Cart Button -->

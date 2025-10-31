@@ -4,7 +4,7 @@
 <div class="max-w-6xl mx-auto p-4 sm:p-8 mt-10 mb-20">
     <div class="flex items-center justify-between mb-6">
         <h1 class="text-3xl font-bold text-gray-900">Order Details</h1>
-        <a href="{{ route('user.orders.index') }}" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg transition-colors">
+        <a href="{{ route('orders.index') }}" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg transition-colors">
             ← Back to Orders
         </a>
     </div>
