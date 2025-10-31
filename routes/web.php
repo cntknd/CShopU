@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Product;
 
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\ProductController;     
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AdminController;
@@ -49,7 +49,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         }
         return view('users.dashboard');
     })->name('dashboard');
-    
+
     // Test route for order confirmation email
     Route::get('/test-order-email/{id}', [UserOrderController::class, 'confirmAndNotify']);
 });
@@ -61,13 +61,13 @@ Route::middleware(['auth', 'verified', 'can:admin-access'])->prefix('admin')->na
     Route::get('/dashboard', function () {
         return view('admin.dashboard');
     })->name('dashboard');
-    
+
     // Products Management
     Route::resource('manageproducts', \App\Http\Controllers\Admin\ProdCtrl::class);
-    
+
     // Categories Management
     Route::resource('categories', CategoryController::class);
-    
+
     // Orders Management
     Route::prefix('orders')->name('orders.')->group(function () {
         Route::get('/', [OrderController::class, 'index'])->name('index');
@@ -79,14 +79,14 @@ Route::middleware(['auth', 'verified', 'can:admin-access'])->prefix('admin')->na
         Route::get('/{order}/receipt', [OrderController::class, 'generateReceipt'])->name('receipt');
         Route::get('/count', [OrderController::class, 'getNewOrderCount'])->name('count');
     });
-    
+
     // Feedback Management
     Route::get('feedbacks', [\App\Http\Controllers\Admin\FeedbackController::class, 'index'])->name('feedbacks.index');
     Route::get('feedbacks/{feedback}', [\App\Http\Controllers\Admin\FeedbackController::class, 'show'])->name('feedbacks.show');
     // Sales Management
     Route::get('sales/overview', [SalesController::class, 'overview'])->name('sales.overview');
     Route::get('sales/report', [SalesController::class, 'salesReport'])->name('sales.report');
-    
+
     // Feedback Management
     Route::get('feedbacks', [UserFeedbackController::class, 'index'])->name('feedbacks.index');
 });
@@ -100,7 +100,6 @@ Route::middleware(['auth', 'verified', 'can:admin-access'])->prefix('admin')->na
         Route::post('/{order}/reject', [OrderController::class, 'reject'])->name('reject');
         Route::get('/{order}/receipt', [OrderController::class, 'generateReceipt'])->name('receipt');
         Route::get('/user-orders', [OrderController::class, 'userOrders'])->name('user');
-        Route::get('/count', [OrderController::class, 'getNewOrderCount'])->name('count');
     });
 
 // User Feedback Routes
@@ -108,7 +107,7 @@ Route::middleware(['auth'])->group(function () {
     // Feedback routes
     Route::get('/feedback', [\App\Http\Controllers\FeedbackController::class, 'create'])->name('feedback.create');
     Route::post('/feedback', [\App\Http\Controllers\FeedbackController::class, 'store'])->name('feedback.store');
-    
+
     // Order payslip routes
     Route::get('/orders/{order}/print-payslip', [\App\Http\Controllers\UserOrderController::class, 'printPayslip'])->name('user.orders.print-payslip');
     Route::get('/orders/{order}/download-payslip', [\App\Http\Controllers\UserOrderController::class, 'downloadPayslip'])->name('user.orders.download-payslip');
@@ -188,12 +187,15 @@ Route::middleware(['auth', 'can:admin-access'])
         Route::delete('/backups/delete', [BackupController::class, 'destroy'])->name('backups.destroy');
         Route::post('/backups/cleanup', [BackupController::class, 'cleanup'])->name('backups.cleanup');
         Route::get('/backups/stats', [BackupController::class, 'stats'])->name('backups.stats');
+
+        // 📊 Order Count for badges
+        Route::get('/orders/count', [OrderController::class, 'getNewOrderCount'])->name('orders.count');
     });
 
 
-        
 
-   
+
+
 
 // ==========================
 // AUTH ROUTES

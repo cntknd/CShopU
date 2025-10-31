@@ -87,6 +87,20 @@
       background-color: #8b0000;
     }
 
+    .hamburger {
+      display: none;
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0.5rem;
+    }
+
+    .hamburger:focus {
+      outline: none;
+    }
+
     /* HERO SECTION */
     .hero {
       display: flex;
@@ -122,7 +136,7 @@
       line-height: 1.2;
       margin-bottom: 2rem;
       color: #ffffff;
-      transition: color 0.5s ease; 
+      transition: color 0.5s ease;
     }
 
     .typed-wrapper {
@@ -210,28 +224,73 @@
       font-size: 0.95rem;
       color: #2d2d2d;
       border-top: 1px solid #ddd;
+      box-shadow: none;
     }
 
-    footer a {
-      color: #2d2d2d;
-      text-decoration: none;
-      margin: 0 0.5rem;
-      font-weight: 500;
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
     }
 
-    footer a:hover {
-      color: #800000;
+    .university-text {
+      margin-bottom: 1rem;
+      line-height: 1.4;
+    }
+
+    footer .social {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin: 1.5rem 0;
     }
 
     footer .social i {
-      font-size: 1.3rem;
-      margin: 0 0.3rem;
+      font-size: 1.5rem;
       color: #2d2d2d;
       transition: 0.3s ease;
+      padding: 0.5rem;
+      border-radius: 50%;
+      background: none;
+      box-shadow: none;
+      text-shadow: none;
     }
 
     footer .social i:hover {
       color: #800000;
+      background: none;
+      box-shadow: none;
+      text-shadow: none;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin: 1rem 0;
+    }
+
+    .footer-links a {
+      color: #2d2d2d;
+      text-decoration: none;
+      font-weight: 500;
+      padding: 0.25rem 0.5rem;
+      transition: color 0.3s ease;
+    }
+
+    .footer-links a:hover {
+      color: #800000;
+    }
+
+    .link-separator {
+      color: #666;
+      font-weight: 300;
+    }
+
+    .copyright {
+      margin-top: 1.5rem !important;
+      font-size: 0.85rem;
     }
 
     /* RESPONSIVE */
@@ -249,6 +308,99 @@
         font-size: 1.5rem;
       }
     }
+
+    /* Mobile Navbar */
+    @media (max-width: 768px) {
+      nav .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: #800000;
+        flex-direction: column;
+        padding: 1rem 0;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      }
+
+      nav .nav-links.show {
+        display: flex;
+      }
+
+      nav .nav-links a {
+        margin: 0.5rem 2rem;
+        padding: 0.5rem 0;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+      }
+
+      nav .nav-links a:last-child {
+        border-bottom: none;
+      }
+
+      .hamburger {
+        display: block;
+      }
+
+      .product-card img {
+        height: 180px;
+      }
+
+      .product-card h3 {
+        font-size: 0.9rem;
+      }
+
+      .btn-shop {
+        font-size: 0.9rem;
+        padding: 0.7rem 1.5rem;
+      }
+
+      footer {
+        padding: 2rem 1rem;
+      }
+
+      .university-text {
+        font-size: 0.9rem;
+        line-height: 1.5;
+      }
+
+      footer .social {
+        gap: 1.5rem;
+        margin: 2rem 0;
+      }
+
+      footer .social i {
+        font-size: 1.8rem;
+        padding: 0.75rem;
+      }
+
+      .footer-links {
+        flex-direction: column;
+        gap: 0.75rem;
+        margin: 1.5rem 0;
+      }
+
+      .footer-links a {
+        font-size: 0.95rem;
+        padding: 0.5rem 1rem;
+        border-radius: 6px;
+        background: rgba(128, 0, 0, 0.05);
+        transition: all 0.3s ease;
+      }
+
+      .footer-links a:hover {
+        background: rgba(128, 0, 0, 0.1);
+        transform: translateY(-1px);
+      }
+
+      .link-separator {
+        display: none;
+      }
+
+      .copyright {
+        font-size: 0.8rem;
+        margin-top: 2rem !important;
+      }
+    }
   </style>
 </head>
 
@@ -260,6 +412,9 @@
       <img src="{{ asset('images/logo.png') }}" alt="CSU Logo">
       <span>CShopU</span>
     </div>
+    <button class="hamburger" id="hamburger">
+      <i class="bi bi-list"></i>
+    </button>
     <div class="nav-links">
       <a href="#trending">Home</a>
       <a href="#trending">Products</a>
@@ -313,18 +468,22 @@
 
   <!-- FOOTER -->
   <footer>
-    <p><b class="text-maroon">CAGAYAN STATE UNIVERSITY</b> | Empowering Students Through Innovation</p>
-    <div class="social my-2">
-      <a href="https://www.facebook.com/CSUABAO" target="_blank"><i class="bi bi-facebook"></i></a>
-      <a href="https://instagram.com/csukomyu/" target="_blank"><i class="bi bi-instagram"></i></a>
-      <a href="mailto:cshopu@csu.edu.ph"><i class="bi bi-envelope"></i></a>
+    <div class="footer-content">
+      <p class="university-text"><b class="text-maroon">CAGAYAN STATE UNIVERSITY</b> | Empowering Students Through Innovation</p>
+      <div class="social my-3">
+        <a href="https://www.facebook.com/CSUABAO" target="_blank"><i class="bi bi-facebook"></i></a>
+        <a href="https://instagram.com/csukomyu/" target="_blank"><i class="bi bi-instagram"></i></a>
+        <a href="mailto:cshopu@csu.edu.ph"><i class="bi bi-envelope"></i></a>
+      </div>
+      <div class="footer-links">
+        <a href="{{ route('citizens-charter') }}">Citizens Charter</a>
+        <span class="link-separator">|</span>
+        <a href="{{ route('payment') }}">Payment</a>
+        <span class="link-separator">|</span>
+        <a href="{{ route('contact-us') }}">Contact Us</a>
+      </div>
+      <p class="copyright mt-3 small text-muted">&copy; 2025 CShopU - CSU Aparri Campus</p>
     </div>
-    <div>
-      <a href="{{ route('citizens-charter') }}">Citizens Charter</a> |
-      <a href="{{ route('payment') }}">Payment</a> |
-      <a href="{{ route('contact-us') }}">Contact Us</a>
-    </div>
-    <p class="mt-3 small text-muted">&copy; 2025 CShopU - CSU Aparri Campus</p>
   </footer>
 
   <!-- Typed.js Animation -->
@@ -363,6 +522,21 @@
       } else {
         navbar.classList.remove('solid');
         navbar.classList.add('transparent');
+      }
+    });
+
+    // Mobile hamburger menu
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.querySelector('.nav-links');
+    hamburger.addEventListener('click', () => {
+        console.log('hamburger clicked');
+      navLinks.classList.toggle('show');
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!navbar.contains(e.target)) {
+        navLinks.classList.remove('show');
       }
     });
   </script>

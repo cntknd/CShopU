@@ -137,7 +137,7 @@
     height: 100vh;
     background: linear-gradient(180deg, #1a1a1a 0%, #2d2d2d 100%);
     color: #ffffff;
-    z-index: 1000;
+    z-index: 1050;
     display: flex;
     flex-direction: column;
     box-shadow: 2px 0 15px rgba(0, 0, 0, 0.15);
@@ -482,97 +482,3 @@
 .nav-item:nth-child(7) { animation-delay: 0.7s; }
 .nav-item:nth-child(8) { animation-delay: 0.8s; }
 </style>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Prevent multiple initializations
-    if (window.sidebarInitialized) return;
-    window.sidebarInitialized = true;
-
-    const sidebar = document.getElementById('adminSidebar');
-    const sidebarToggle = document.getElementById('sidebarToggle');
-    const mainContent = document.querySelector('.main-content');
-
-    // Mobile sidebar toggle
-    if (sidebarToggle && sidebar) {
-        sidebarToggle.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            sidebar.classList.toggle('open');
-        });
-    }
-
-    // Close sidebar when clicking outside on mobile
-    document.addEventListener('click', function(e) {
-        if (window.innerWidth <= 768 && sidebar && sidebar.classList.contains('open')) {
-            if (!sidebar.contains(e.target) && !sidebarToggle.contains(e.target)) {
-                sidebar.classList.remove('open');
-            }
-        }
-    });
-
-    // Handle window resize
-    window.addEventListener('resize', function() {
-        if (window.innerWidth > 768 && sidebar) {
-            sidebar.classList.remove('open');
-        }
-    });
-
-    // Update order badge with error handling
-    function updateOrderBadge() {
-        const badge = document.getElementById('orderBadge');
-        if (!badge) return;
-
-        fetch("{{ route('admin.orders.count') }}", {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-                'X-Requested-With': 'XMLHttpRequest'
-            }
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(data => {
-            if (data.count > 0) {
-                badge.textContent = data.count;
-                badge.style.display = 'inline-block';
-            } else {
-                badge.style.display = 'none';
-            }
-        })
-        .catch(error => {
-            console.warn('Could not fetch order count:', error);
-            // Don't show error to user, just hide badge
-            badge.style.display = 'none';
-        });
-    }
-
-    // Initialize order badge
-    updateOrderBadge();
-    
-    // Update badge every 30 seconds (reduced frequency)
-    setInterval(updateOrderBadge, 30000);
-
-    // Add smooth scrolling to navigation
-    const navLinks = document.querySelectorAll('.nav-link');
-    navLinks.forEach(link => {
-        link.addEventListener('click', function() {
-            // Close mobile sidebar when navigating
-            if (window.innerWidth <= 768 && sidebar) {
-                sidebar.classList.remove('open');
-            }
-        });
-    });
-
-    // Add keyboard navigation support
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && sidebar && sidebar.classList.contains('open')) {
-            sidebar.classList.remove('open');
-        }
-    });
-});
-</script>

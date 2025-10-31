@@ -77,7 +77,7 @@ class ProdCtrl extends Controller
     if (!$category) {
         return redirect()->back()->with('error', 'Selected category not found. Please select a valid category.');
     }
-    
+
     // ✅ UPDATED: Calculate stock based on has_size
     if ($request->has_size == 1) {
         // If has size, calculate total stock from sizes
@@ -94,7 +94,7 @@ class ProdCtrl extends Controller
         // If no size, use manual stock input
         $newprod->stock = $request->input('stock');
     }
-    
+
     $newprod->save();
 
     // Save sizes if product has_size
@@ -218,10 +218,10 @@ class ProdCtrl extends Controller
     public function destroy(string $id)
     {
         $product = Product::findOrFail($id);
-        
+
         // Delete associated sizes
         ProductSize::where('product_id', $id)->delete();
-        
+
         $product->delete();
 
         return redirect()->route('admin.manageproducts.index')->with('success', 'Product Deleted successfully.');
