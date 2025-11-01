@@ -11,6 +11,13 @@
             <img src="{{ asset('images/logo.png') }}" alt="CShopU Logo" class="h-8 w-auto">
             <span class="text-white font-bold text-lg">CShopU</span>
         </div>
+        <!-- small animated subtitle beside logo (copied from welcome page) -->
+        <div class="hidden sm:flex items-center ms-4">
+            <span class="nav-subtitle text-white text-sm">One Stop Shop for your Campus</span>
+            <span class="typed-wrapper ms-2">
+                <span id="typed-text-nav" class="typed-text text-yellow-300"></span>
+            </span>
+        </div>
     </div>
 
     <!-- Navigation Links (Right) -->
@@ -157,3 +164,34 @@
 
 
 </nav>
+
+@push('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const navSubtitle = document.querySelector('.nav-subtitle');
+            if(document.getElementById('typed-text-nav')){
+                const typedNav = new Typed('#typed-text-nav', {
+                    strings: ["Products", "Services", "Needs."],
+                    typeSpeed: 40,
+                    backSpeed: 30,
+                    backDelay: 1000,
+                    startDelay: 200,
+                    loop: true,
+                    showCursor: true,
+                    cursorChar: "|",
+                    onStringTyped: function(pos, self) {
+                        if(self.strings[pos] === "Needs.") {
+                            if(navSubtitle) navSubtitle.style.color = '#b30000';
+                        } else {
+                            if(navSubtitle) navSubtitle.style.color = '#ffffff';
+                        }
+                    },
+                    onReset: function(self) {
+                        if(navSubtitle) navSubtitle.style.color = '#ffffff';
+                    }
+                });
+            }
+        });
+    </script>
+@endpush
