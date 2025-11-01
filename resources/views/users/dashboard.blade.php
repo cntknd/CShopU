@@ -11,6 +11,19 @@
         background-blend-mode: overlay;
         /* Maroon glow: inset tint to darken image subtly + external maroon drop shadow */
         box-shadow: inset 0 0 80px rgba(128,0,0,0.18), 0 24px 80px rgba(128,0,0,0.28);
+        position: relative; /* enable pseudo-element overlay */
+        overflow: hidden;
+    }
+
+    /* Maroon overlay directly over the background image (below content) */
+    .hero::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: rgba(128,0,0,0.22);
+        mix-blend-mode: multiply;
+        pointer-events: none;
+        z-index: 0;
     }
     .hero-title {
         font-size: 70px;
@@ -43,7 +56,7 @@
 
 <!-- Hero Section (homepage style) - single background image -->
 <section class="hero relative text-center text-white bg-cover bg-center" style="background-image: url('{{ asset("images/building.jpg") }}'); background-size: cover; background-position: center; background-repeat: no-repeat;">
-    <div class="max-w-4xl mx-auto px-4 py-20 sm:py-28 lg:py-36">
+    <div class="hero-inner max-w-4xl mx-auto px-4 py-20 sm:py-28 lg:py-36">
         <h1 class="hero-title mb-4 text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-extrabold text-yellow-400 leading-tight drop-shadow-lg">
             Welcome back, <span class="block sm:inline">{{ Auth::user()->first_name }}</span>
         </h1>
