@@ -9,6 +9,8 @@
         padding: 6rem 10% !important;
         min-height: 60vh !important;
         background-blend-mode: overlay;
+        /* Maroon glow: inset tint to darken image subtly + external maroon drop shadow */
+        box-shadow: inset 0 0 80px rgba(128,0,0,0.18), 0 24px 80px rgba(128,0,0,0.28);
     }
     .hero-title {
         font-size: 70px;
