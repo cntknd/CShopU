@@ -8,30 +8,7 @@
     .hero {
         padding: 6rem 10% !important;
         min-height: 60vh !important;
-        background-blend-mode: overlay;
-        /* Maroon glow: inset tint to darken image subtly + external maroon drop shadow */
-        box-shadow: inset 0 0 80px rgba(128,0,0,0.18), 0 24px 80px rgba(128,0,0,0.28);
-        position: relative; /* enable pseudo-element overlay */
-        overflow: hidden;
     }
-
-    /* Maroon overlay directly over the background image (below content) */
-    .hero::before {
-        content: '';
-        position: absolute;
-        inset: 0;
-        background: rgba(128,0,0,0.22);
-        mix-blend-mode: multiply;
-        pointer-events: none;
-        z-index: 0;
-    }
-
-    /* ensure hero content sits above overlay */
-    .hero-inner { position: relative; z-index: 2; }
-
-    /* make typed words clearly visible beside the main subtitle */
-    .typed-subtitle { position: relative; z-index: 3; color: #FFD700; text-shadow: 1px 1px 6px rgba(0,0,0,0.6); font-weight:700; }
-    .hero-subtitle { position: relative; z-index: 3; }
     .hero-title {
         font-size: 70px;
         font-weight: 900;
@@ -39,8 +16,6 @@
         text-shadow: 2px 2px 8px rgba(128,0,0,0.8);
         line-height: 1;
     }
-    /* main subtitle kept static (no entrance animation) */
-    /* removed fadeInUp animation per design request */
     @media (max-width: 1024px) {
         .hero { padding: 4rem 6% !important; }
         .hero-title { font-size: 48px; }
@@ -63,22 +38,19 @@
     }
 </style>
 
-<!-- Hero Section (homepage style) - single background image -->
+<!-- Hero Section (homepage style) -->
 <section class="hero relative text-center text-white bg-cover bg-center" style="background-image: url('{{ asset("images/building.jpg") }}'); background-size: cover; background-position: center; background-repeat: no-repeat;">
-    <div class="hero-inner max-w-4xl mx-auto px-4 py-20 sm:py-28 lg:py-36">
+    <div class="max-w-4xl mx-auto px-4 py-20 sm:py-28 lg:py-36">
         <h1 class="hero-title mb-4 text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-extrabold text-yellow-400 leading-tight drop-shadow-lg">
             Welcome back, <span class="block sm:inline">{{ Auth::user()->first_name }}</span>
         </h1>
 
-            <div class="subtitle-group max-w-2xl mx-auto mb-6 flex flex-col sm:flex-row items-center justify-center gap-4">
-                <p class="hero-subtitle text-base sm:text-lg md:text-2xl font-semibold text-white m-0">
-                    One Stop Shop for your Campus
-                </p>
-
-                <p class="typed-subtitle text-lg sm:text-2xl md:text-3xl font-extrabold text-yellow-300 m-0">
-                    <span id="typed-text" class="typed-text"></span>
-                </p>
-            </div>
+        <p class="hero-subtitle text-base sm:text-lg md:text-2xl font-semibold mb-6 text-white max-w-2xl mx-auto">
+            One Stop Shop for your Campus Needs
+            <span class="typed-wrapper">
+                <span id="typed-text" class="typed-text"></span>
+            </span>
+        </p>
 
         <a href="{{ route('user.products.index') }}" class="inline-block bg-red-900 text-white font-semibold py-2 px-6 sm:py-3 sm:px-6 rounded-full shopnow-shadow transition-transform hover:scale-105 hover:bg-red-700 text-sm sm:text-base">
             Shop Now
@@ -153,16 +125,16 @@
     <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-                        const typed = new Typed("#typed-text", {
-                            strings: ["Products", "Services", "Needs"],
-                            typeSpeed: 60,
-                            backSpeed: 40,
-                            backDelay: 900,
-                            startDelay: 300,
-                            loop: true,
-                            showCursor: true,
-                            cursorChar: "|"
-                        });
+          const typed = new Typed("#typed-text", {
+            strings: ["Products", "Services", "Needs."],
+            typeSpeed: 40,
+            backSpeed: 30,
+            backDelay: 1000,
+            startDelay: 200,
+            loop: true,
+            showCursor: true,
+            cursorChar: "|"
+          });
         });
     </script>
 @endpush
