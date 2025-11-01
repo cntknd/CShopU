@@ -25,6 +25,13 @@
         pointer-events: none;
         z-index: 0;
     }
+
+    /* ensure hero content sits above overlay */
+    .hero-inner { position: relative; z-index: 2; }
+
+    /* make typed words clearly visible beside the main subtitle */
+    .typed-subtitle { position: relative; z-index: 3; color: #FFD700; text-shadow: 1px 1px 6px rgba(0,0,0,0.6); font-weight:700; }
+    .hero-subtitle { position: relative; z-index: 3; }
     .hero-title {
         font-size: 70px;
         font-weight: 900;
