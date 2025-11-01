@@ -8,7 +8,24 @@
     .hero {
         padding: 6rem 10% !important;
         min-height: 60vh !important;
+        position: relative;
+        overflow: hidden;
+        /* external maroon glow */
+        box-shadow: 0 24px 80px rgba(128,0,0,0.22);
     }
+
+    /* maroon overlay tint over the background image (keeps content readable) */
+    .hero::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: rgba(128,0,0,0.20);
+        mix-blend-mode: multiply;
+        pointer-events: none;
+        z-index: 1;
+    }
+
+    .hero-inner { position: relative; z-index: 2; }
     .hero-title {
         font-size: 70px;
         font-weight: 900;
@@ -40,7 +57,7 @@
 
 <!-- Hero Section (homepage style) -->
 <section class="hero relative text-center text-white bg-cover bg-center" style="background-image: url('{{ asset("images/building.jpg") }}'); background-size: cover; background-position: center; background-repeat: no-repeat;">
-    <div class="max-w-4xl mx-auto px-4 py-20 sm:py-28 lg:py-36">
+    <div class="hero-inner max-w-4xl mx-auto px-4 py-20 sm:py-28 lg:py-36">
         <h1 class="hero-title mb-4 text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-extrabold text-yellow-400 leading-tight drop-shadow-lg">
             Welcome back, <span class="block sm:inline">{{ Auth::user()->first_name }}</span>
         </h1>
