@@ -46,14 +46,15 @@
             Welcome back, <span class="block sm:inline">{{ Auth::user()->first_name }}</span>
         </h1>
 
-        <p class="hero-subtitle text-base sm:text-lg md:text-2xl font-semibold mb-6 text-white max-w-2xl mx-auto">
-            One Stop Shop for your Campus Needs
-            <span class="typed-wrapper">
-                <span id="typed-text" class="typed-text"></span>
-            </span>
-        </p>
+            <p class="hero-subtitle text-base sm:text-lg md:text-2xl font-semibold mb-2 text-white max-w-2xl mx-auto">
+                One Stop Shop for your Campus
+            </p>
 
-        <a href="{{ route('user.products.index') }}" class="inline-block bg-red-900 text-white font-semibold py-2.5 px-5 sm:py-3 sm:px-6 rounded-full shopnow-shadow transition-transform hover:scale-105 hover:bg-red-700 text-sm sm:text-base">
+            <p class="typed-subtitle text-lg sm:text-2xl md:text-3xl font-extrabold mb-6 text-yellow-300 max-w-2xl mx-auto">
+                <span id="typed-text" class="typed-text"></span>
+            </p>
+
+        <a href="{{ route('user.products.index') }}" class="inline-block bg-red-900 text-white font-semibold py-2 px-6 sm:py-3 sm:px-6 rounded-full shopnow-shadow transition-transform hover:scale-105 hover:bg-red-700 text-sm sm:text-base">
             Shop Now
         </a>
     </div>
@@ -126,16 +127,16 @@
     <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-          const typed = new Typed("#typed-text", {
-            strings: ["Products", "Services", "Needs."],
-            typeSpeed: 40,
-            backSpeed: 30,
-            backDelay: 1000,
-            startDelay: 200,
-            loop: true,
-            showCursor: true,
-            cursorChar: "|"
-          });
+                        const typed = new Typed("#typed-text", {
+                            strings: ["Products", "Services", "Needs"],
+                            typeSpeed: 60,
+                            backSpeed: 40,
+                            backDelay: 900,
+                            startDelay: 300,
+                            loop: true,
+                            showCursor: true,
+                            cursorChar: "|"
+                        });
         });
     </script>
 @endpush
