@@ -45,7 +45,7 @@
             </span>
         </p>
 
-        <a href="{{ route('user.products.index') }}" class="inline-block bg-red-900 text-white font-semibold py-2.5 px-5 sm:py-3 sm:px-6 rounded-full shadow-md hover:shadow-lg transition-transform hover:scale-105 hover:bg-red-700 text-base sm:text-lg">
+        <a href="{{ route('user.products.index') }}" class="inline-block bg-red-900 text-white font-semibold py-2.5 px-5 sm:py-3 sm:px-6 rounded-full shadow-md hover:shadow-lg transition-transform hover:scale-105 hover:bg-red-700 text-sm sm:text-base">
             Shop Now
         </a>
     </div>
