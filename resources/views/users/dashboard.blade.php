@@ -39,20 +39,22 @@
     }
 </style>
 
-<!-- Hero Section (homepage style) -->
-<section class="hero relative text-center text-white bg-cover bg-center" style="background-image: linear-gradient(rgba(128,0,0,0.45), rgba(128,0,0,0.45)), url('{{ asset("images/building.jpg") }}'); background-blend-mode: overlay;">
+<!-- Hero Section (homepage style) - single background image -->
+<section class="hero relative text-center text-white bg-cover bg-center" style="background-image: url('{{ asset("images/building.jpg") }}'); background-size: cover; background-position: center; background-repeat: no-repeat;">
     <div class="max-w-4xl mx-auto px-4 py-20 sm:py-28 lg:py-36">
         <h1 class="hero-title mb-4 text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-extrabold text-yellow-400 leading-tight drop-shadow-lg">
             Welcome back, <span class="block sm:inline">{{ Auth::user()->first_name }}</span>
         </h1>
 
-            <p class="hero-subtitle text-base sm:text-lg md:text-2xl font-semibold mb-2 text-white max-w-2xl mx-auto">
-                One Stop Shop for your Campus
-            </p>
+            <div class="subtitle-group max-w-2xl mx-auto mb-6 flex flex-col sm:flex-row items-center justify-center gap-4">
+                <p class="hero-subtitle text-base sm:text-lg md:text-2xl font-semibold text-white m-0">
+                    One Stop Shop for your Campus
+                </p>
 
-            <p class="typed-subtitle text-lg sm:text-2xl md:text-3xl font-extrabold mb-6 text-yellow-300 max-w-2xl mx-auto">
-                <span id="typed-text" class="typed-text"></span>
-            </p>
+                <p class="typed-subtitle text-lg sm:text-2xl md:text-3xl font-extrabold text-yellow-300 m-0">
+                    <span id="typed-text" class="typed-text"></span>
+                </p>
+            </div>
 
         <a href="{{ route('user.products.index') }}" class="inline-block bg-red-900 text-white font-semibold py-2 px-6 sm:py-3 sm:px-6 rounded-full shopnow-shadow transition-transform hover:scale-105 hover:bg-red-700 text-sm sm:text-base">
             Shop Now
