@@ -32,6 +32,12 @@
         text-shadow: 2px 2px 8px rgba(128,0,0,0.8);
         line-height: 1;
     }
+    /* entrance animation for the main subtitle */
+    @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(10px); }
+        to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-subtitle { animation: fadeInUp 700ms cubic-bezier(.2,.9,.2,1) both; }
     @media (max-width: 1024px) {
         .hero { padding: 4rem 6% !important; }
         .hero-title { font-size: 48px; }
