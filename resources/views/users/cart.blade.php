@@ -49,27 +49,23 @@
                     @endphp
 
                     {{-- Individual Cart Item Card (Matches Image Design) --}}
-                    <div class="cart-item flex p-4 bg-white rounded-lg shadow-md border border-gray-100" data-product-id="{{ $productId }}" data-cart-key="{{ $cartKey }}">
-                        
+                    <div class="cart-item flex flex-col sm:flex-row p-4 bg-white rounded-lg shadow-md border border-gray-100" data-product-id="{{ $productId }}" data-cart-key="{{ $cartKey }}">
                         {{-- Product Image --}}
                         <img src="{{ asset('images/' . $item['image']) }}" 
                             alt="{{ $item['name'] }}" 
-                            class="w-24 h-24 object-cover rounded-md flex-shrink-0 mr-4">
-                        
-                        <div class="flex-grow flex justify-between items-center">
-                            
+                            class="w-full sm:w-24 h-auto sm:h-24 object-cover rounded-md flex-shrink-0 mb-4 sm:mb-0 sm:mr-4">
+
+                        <div class="flex-grow flex flex-col sm:flex-row justify-between items-start sm:items-center">
                             {{-- Item Details and Price --}}
                             <div class="flex flex-col">
                                 <span class="text-lg font-medium text-gray-900">{{ $item['name'] }}</span>
                                 <span class="text-base text-gray-700">₱{{ number_format($item['price'], 2) }}</span>
-                                {{-- Removed the overall Total price per item to match the image --}}
                             </div>
-                            
-                            <div class="flex items-center space-x-4">
-                                
+
+                            <div class="flex flex-col sm:flex-row items-start sm:items-center sm:space-x-4 mt-3 sm:mt-0">
                                 {{-- Size Dropdown (Only if the product has size options) --}}
                                 @if(isset($item['has_size']) && $item['has_size'])
-                                    <div class="w-32">
+                                    <div class="w-full sm:w-32">
                                         <select name="sizes[{{ $cartKey }}]" 
                                                     class="size-select text-sm border-gray-300 focus:border-red-500 focus:ring-red-500 rounded-md shadow-sm block w-full px-2 py-1 {{ $isOutOfStock ? 'border-red-500' : '' }}" 
                                                     data-product-id="{{ $productId }}"
@@ -87,7 +83,6 @@
                                                     </option>
                                                 @endforeach
                                         </select>
-                                        {{-- Stock/Size Warning (Hidden for the new minimalist design, but kept for logic) --}}
                                         <div class="stock-warning text-xs mt-1 hidden">
                                             @if(!isset($item['size']) || empty($item['size']))
                                                 <span class="text-red-700 font-medium">Size required</span>
@@ -99,18 +94,15 @@
                                         </div>
                                     </div>
                                 @else
-                                    {{-- Placeholder for products without size --}}
-                                    <div class="w-32">
-                                        {{-- We use a simple select for quantity here to match the dropdown style --}}
+                                    <div class="w-full sm:w-32">
                                         <select class="text-sm border-gray-300 rounded-md shadow-sm block w-full px-2 py-1" disabled>
                                             <option>—</option>
                                         </select>
                                     </div>
                                 @endif
-                                
-                                {{-- Quantity Controls (Adapted to match the centered input style) --}}
-                                <div class="flex items-center space-x-2 border border-gray-300 rounded-md p-0.5">
-                                    {{-- Decrement Button --}}
+
+                                {{-- Quantity Controls --}}
+                                <div class="flex items-center space-x-2 border border-gray-300 rounded-md p-0.5 mt-3 sm:mt-0">
                                     <form action="{{ route('user.cart.updateQuantity', $cartKey) }}" method="POST" class="inline m-0">
                                         @csrf
                                         <input type="hidden" name="action" value="decrement">
@@ -123,7 +115,6 @@
 
                                     <span class="text-base font-medium quantity-display w-6 text-center">{{ $item['quantity'] }}</span>
 
-                                    {{-- Increment Button --}}
                                     <form action="{{ route('user.cart.updateQuantity', $cartKey) }}" method="POST" class="inline m-0">
                                         @csrf
                                         <input type="hidden" name="action" value="increment">
@@ -134,11 +125,11 @@
                                         </button>
                                     </form>
                                 </div>
-                                
-                                {{-- Remove Button (Trash Icon) --}}
+
+                                {{-- Remove Button --}}
                                 <a href="{{ route('user.cart.removeItem', $cartKey) }}" 
                                     onclick="return confirm('Remove this item from cart?')"
-                                    class="text-gray-400 hover:text-red-500 transition duration-150">
+                                    class="text-gray-400 hover:text-red-500 transition duration-150 mt-3 sm:mt-0">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
                                 </a>
                             </div>

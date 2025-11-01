@@ -54,11 +54,11 @@
                     @foreach($orders as $order)
                         <tr class="order-row border-b border-gray-100 hover:bg-gray-50 transition duration-200">
                             {{-- Order Number --}}
-                            <td class="px-4 py-4 font-mono text-gray-800 font-semibold text-sm">
+                            <td data-label="Order #" class="px-4 py-4 font-mono text-gray-800 font-semibold text-sm">
                                 {{ $order->id }}
                             </td>
                             {{-- Items --}}
-                            <td class="px-4 py-4">
+                            <td data-label="Items" class="px-4 py-4">
                                 <ul class="list-disc list-inside space-y-1 text-sm text-gray-800">
                                     @forelse ($order->items as $item)
                                         <li>
@@ -71,15 +71,15 @@
                                 </ul>
                             </td>
                             {{-- Total --}}
-                            <td class="px-4 py-4 text-green-600 font-bold">
+                            <td data-label="Total" class="px-4 py-4 text-green-600 font-bold">
                                 ₱{{ number_format((float) $order->total_price, 2) }}
                             </td>
                             {{-- Date --}}
-                            <td class="px-4 py-4 text-gray-600 text-sm">
+                            <td data-label="Date" class="px-4 py-4 text-gray-600 text-sm">
                                 {{ $order->created_at->format('M d, Y') }}
                             </td>
                             {{-- Status --}}
-                            <td class="px-4 py-4 text-center">
+                            <td data-label="Status" class="px-4 py-4 text-center">
                                 <div class="inline-block px-3 py-1 rounded-full text-xs font-medium 
                                     @if ($order->status === 'pending')
                                         bg-yellow-100 text-yellow-800
@@ -94,7 +94,7 @@
                                 </div>
                             </td>
                             {{-- Payment Status --}}
-                            <td class="px-4 py-4 text-center">
+                            <td data-label="Payment" class="px-4 py-4 text-center">
                                 @if($order->status === 'confirmed')
                                     @php
                                         $timeRemaining = $order->getTimeRemainingToPay();
@@ -140,7 +140,7 @@
                                 @endif
                             </td>
                             {{-- Payslip Actions --}}
-                            <td class="px-4 py-4 text-center">
+                            <td data-label="Payslip" class="px-4 py-4 text-center">
                                 @if($order->status === 'confirmed' || $order->status === 'completed')
                                     <div class="flex items-center justify-center space-x-2">
                                         {{-- Print Button --}}
@@ -195,6 +195,18 @@
     
     .animate-pulse {
         animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+    
+    /* Responsive: turn table into stacked cards on small screens */
+    @media (max-width: 768px) {
+        table#ordersTable thead { display: none; }
+        table#ordersTable, table#ordersTable tbody, table#ordersTable tr, table#ordersTable td { display: block; width: 100%; }
+        table#ordersTable tr { margin-bottom: 1rem; border-bottom: 1px solid #e5e7eb; padding-bottom: 0.75rem; }
+        table#ordersTable td { display: flex; justify-content: space-between; padding: 0.5rem 0; }
+        table#ordersTable td::before { content: attr(data-label); color: #6b7280; font-weight: 600; margin-right: 0.5rem; }
+        table#ordersTable td .list-disc { margin: 0; padding-left: 1rem; }
+        table#ordersTable td .list-disc li { margin-left: 0.75rem; }
+        table#ordersTable td.text-center { justify-content: flex-start; }
     }
 </style>
 
