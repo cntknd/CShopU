@@ -647,7 +647,7 @@
     </div>
   </section>
 
-  <!-- FOOTER -->
+  <!-- FOOTER -->     
   <footer>
     <div class="footer-content">
       <p class="university-text"><b class="text-maroon">CAGAYAN STATE UNIVERSITY</b> | Empowering Students Through Innovation</p>
