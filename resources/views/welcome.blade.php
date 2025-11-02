@@ -68,6 +68,52 @@
       transition: color 0.3s ease;
     }
 
+    /* Nav is hidden by default and opened via hamburger overlay */
+    .nav-links {
+      display: none; /* hidden by default; opened via hamburger */
+    }
+
+    /* Fullscreen overlay menu (used for all viewports when hamburger is clicked) */
+    .nav-links.overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 1200;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .nav-links.overlay .menu-inner {
+      background: #800000;
+      width: 90%;
+      max-width: 420px;
+      padding: 1.25rem 1rem;
+      border-radius: 12px;
+      color: #fff;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+      text-align: center;
+    }
+
+    .nav-links.overlay .menu-inner a {
+      display: block;
+      color: #fff;
+      font-weight: 700;
+      padding: 0.85rem 0;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .nav-links.overlay .menu-inner a.cta-btn {
+      margin-top: 0.75rem;
+      display: inline-block;
+      background: #b30000;
+      border-radius: 9999px;
+      padding: 0.6rem 1.25rem;
+    }
+
+    .nav-links.show { display: block; }
+
     nav .nav-links a:hover {
       color: #facc15;
     }
@@ -115,7 +161,7 @@
           rgba(128, 0, 0, 0.4),
           rgba(128, 0, 0, 0.4)
         ),
-        url('{{ asset("images/building.jpg") }}') center/cover no-repeat;
+        url('{{ asset("images/csu.png") }}') center/cover no-repeat;
       background-blend-mode: overlay;
       filter: brightness(0.9);
     }
@@ -137,6 +183,52 @@
       margin-bottom: 2rem;
       color: #ffffff;
       transition: color 0.5s ease;
+    }
+
+    /* FOOTER */
+    footer {
+      width: 100vw;
+      margin: 0;
+      padding: 0;
+      position: relative;
+      left: 50%;
+      right: 50%;
+      margin-left: -50vw;
+      margin-right: -50vw;
+      background: #ffffff;
+      border-top: 1px solid #e5e7eb;
+    }
+
+    /* Make the inner footer div span the full viewport width if requested */
+    .footer-content {
+      width: 100vw;
+      box-sizing: border-box;
+      padding: 2.5rem 1rem;
+      text-align: center;
+    }
+
+    .footer-links {
+      display: inline-flex;
+      gap: 0.75rem;
+      align-items: center;
+      justify-content: center;
+      margin-top: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      color: #374151;
+      text-decoration: none;
+      font-weight: 600;
+      box-shadow: none !important; /* remove any shadow style */
+      background: transparent !important;
+      padding: 0.25rem 0.5rem;
+      transition: color 0.2s ease, background 0.15s ease;
+    }
+
+    .link-separator {
+      color: #6b7280;
+      font-weight: 600;
     }
 
     .typed-wrapper {
@@ -298,29 +390,50 @@
       .hero {
         padding: 80px 5%;
       }
-    }
-
-    @media (max-width: 576px) {
-      .hero-title {
-        font-size: 2.5rem;
+      /* FOOTER */
+      footer {
+        width: 100vw;
+        margin: 0;
+        padding: 0;
+        position: relative;
+        left: 50%;
+        right: 50%;
+        margin-left: -50vw;
+        margin-right: -50vw;
+        background: #ffffff;
+        border-top: 1px solid #e5e7eb;
       }
-      .hero-subtitle {
-        font-size: 1.5rem;
-      }
-    }
 
-    /* Mobile Navbar */
-    @media (max-width: 768px) {
-      nav .nav-links {
-        display: none;
-        position: absolute;
-        top: 100%;
-        left: 0;
+      .footer-content {
         width: 100%;
-        background-color: #800000;
-        flex-direction: column;
-        padding: 1rem 0;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        padding: 3rem 1rem;
+        text-align: center;
+        max-width: 1280px;
+        margin: 0 auto;
+      }
+
+      .footer-links {
+        display: inline-flex;
+        gap: 0.75rem;
+        align-items: center;
+        justify-content: center;
+        margin-top: 0.5rem;
+        flex-wrap: wrap;
+      }
+
+      .footer-links a {
+        color: #374151;
+        text-decoration: none;
+        font-weight: 600;
+        box-shadow: none !important;
+        background: transparent !important;
+        padding: 0;
+        transition: color 0.2s ease;
+      }
+
+      .footer-links a:hover {
+        color: #b30000;
+      }
       }
 
       nav .nav-links.show {
@@ -401,6 +514,72 @@
         margin-top: 2rem !important;
       }
     }
+
+    /* Additional mobile/responsive adjustments */
+    @media (max-width: 640px) {
+      /* Show hamburger and hide default nav links */
+      .hamburger {
+        display: block;
+      }
+
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 64px;
+        left: 0;
+        right: 0;
+        background: rgba(128,0,0,0.98);
+        padding: 0.75rem 1rem;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+        z-index: 999;
+      }
+
+      .nav-links.show {
+        display: block;
+      }
+
+      .nav-links a {
+        display: block;
+        margin: 0.5rem 0;
+        padding: 0.5rem 0.25rem;
+        color: #fff;
+        font-weight: 600;
+      }
+
+      .nav-links .cta-btn {
+        display: inline-block;
+        margin-top: 0.5rem;
+      }
+
+      /* Reduce hero padding and font sizes for small screens */
+      .hero {
+        min-height: 60vh;
+        padding: 60px 6%;
+      }
+
+      .hero-title {
+        font-size: 2rem;
+      }
+
+      .hero-subtitle {
+        font-size: 1rem;
+      }
+
+      /* Product cards: smaller images on mobile */
+      .product-card img {
+        height: 160px;
+      }
+
+      .section {
+        padding: 3.5rem 0 2.5rem;
+        border-radius: 28px 28px 0 0;
+      }
+
+      /* Footer adjustments already applied — ensure readable spacing */
+      .footer-content {
+        padding: 2rem 0.75rem;
+      }
+    }
   </style>
 </head>
 
@@ -412,19 +591,21 @@
       <img src="{{ asset('images/logo.png') }}" alt="CSU Logo">
       <span>CShopU</span>
     </div>
-    <button class="hamburger" id="hamburger">
+    <button class="hamburger" id="hamburger" aria-controls="nav-links" aria-expanded="false" aria-label="Toggle navigation">
       <i class="bi bi-list"></i>
     </button>
-    <div class="nav-links">
-      <a href="#trending">Home</a>
-      <a href="#trending">Products</a>
-      <a href="#trending">Services</a>
-      <a href="#trending">Contact</a>
-      @auth
-        <a href="{{ route('user.products.index') }}" class="cta-btn">Shop Now</a>
-      @else
-        <a href="{{ route('login') }}" class="cta-btn">Login/Register</a>
-      @endauth
+    <div id="nav-links" class="nav-links overlay" aria-hidden="true">
+      <div class="menu-inner" role="menu" aria-label="Main menu">
+        <a href="#trending" role="menuitem">Home</a>
+        <a href="#trending" role="menuitem">Products</a>
+        <a href="#trending" role="menuitem">Services</a>
+        <a href="#trending" role="menuitem">Contact</a>
+        @auth
+          <a href="{{ route('user.products.index') }}" class="cta-btn" role="menuitem">Shop Now</a>
+        @else
+          <a href="{{ route('login') }}" class="cta-btn" role="menuitem">Login/Register</a>
+        @endauth
+      </div>
     </div>
   </nav>
 
@@ -439,9 +620,9 @@
         </span>
       </p>
       @auth
-        <a href="{{ route('user.products.index') }}" class="btn-shop shadow-sm">Shop Now</a>
+        <a href="{{ route('dashboard') }}" class="btn-shop">Shop Now</a>
       @else
-        <a href="{{ route('login') }}" class="btn-shop shadow-sm">Shop Now</a>
+        <a href="{{ route('login') }}" class="btn-shop">Shop Now</a>
       @endauth
     </div>
   </section>
@@ -473,13 +654,13 @@
       <div class="social my-3">
         <a href="https://www.facebook.com/CSUABAO" target="_blank"><i class="bi bi-facebook"></i></a>
         <a href="https://instagram.com/csukomyu/" target="_blank"><i class="bi bi-instagram"></i></a>
-        <a href="mailto:cshopu@csu.edu.ph"><i class="bi bi-envelope"></i></a>
+        <a href="mailto:csubao@gmail.com"><i class="bi bi-envelope"></i></a>
       </div>
-      <div class="footer-links">
+      <div class="footer-links" role="navigation" aria-label="footer links">
         <a href="{{ route('citizens-charter') }}">Citizens Charter</a>
-        <span class="link-separator">|</span>
+        <span class="link-separator" aria-hidden="true">|</span>
         <a href="{{ route('payment') }}">Payment</a>
-        <span class="link-separator">|</span>
+        <span class="link-separator" aria-hidden="true">|</span>
         <a href="{{ route('contact-us') }}">Contact Us</a>
       </div>
       <p class="copyright mt-3 small text-muted">&copy; 2025 CShopU - CSU Aparri Campus</p>
@@ -527,16 +708,47 @@
 
     // Mobile hamburger menu
     const hamburger = document.getElementById('hamburger');
-    const navLinks = document.querySelector('.nav-links');
-    hamburger.addEventListener('click', () => {
-        console.log('hamburger clicked');
-      navLinks.classList.toggle('show');
+    const navLinks = document.getElementById('nav-links');
+    const pageBody = document.body;
+
+    function openMenu() {
+      hamburger.setAttribute('aria-expanded', 'true');
+      navLinks.classList.add('show');
+      navLinks.setAttribute('aria-hidden', 'false');
+      pageBody.style.overflow = 'hidden'; // prevent background scroll
+    }
+
+    function closeMenu() {
+      hamburger.setAttribute('aria-expanded', 'false');
+      navLinks.classList.remove('show');
+      navLinks.setAttribute('aria-hidden', 'true');
+      pageBody.style.overflow = ''; // restore scrolling
+    }
+
+    hamburger.addEventListener('click', (e) => {
+      const isOpen = navLinks.classList.contains('show');
+      if (isOpen) closeMenu(); else openMenu();
+    });
+
+    // Close menu when a menu link is clicked
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        closeMenu();
+      });
+    });
+
+    // Close on Esc key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && navLinks.classList.contains('show')) {
+        closeMenu();
+      }
     });
 
     // Close menu when clicking outside
     document.addEventListener('click', (e) => {
-      if (!navbar.contains(e.target)) {
+      if (!navbar.contains(e.target) && navLinks.classList.contains('show')) {
         navLinks.classList.remove('show');
+        hamburger.setAttribute('aria-expanded', 'false');
       }
     });
   </script>

@@ -180,6 +180,12 @@
                         Out of Stock
                     </button>
                 @endif
+
+                <!-- View Details Button -->
+                <a href="{{ route('user.products.show', ['id' => $product->id]) }}" 
+                   class="w-full inline-block text-center mt-2 py-2 border border-blue-600 text-blue-600 rounded-md hover:bg-blue-50 text-sm transition">
+                   View Details
+                </a>
             </div>
         </div>
         @endforeach

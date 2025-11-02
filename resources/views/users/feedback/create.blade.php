@@ -1,17 +1,41 @@
 @extends('layouts.Users.app')
 
 @section('content')
+<style>
+    /* Improve touch targets on mobile */
+    @media (max-width: 640px) {
+        input[type="radio"] {
+            min-width: 1.25rem;
+            min-height: 1.25rem;
+        }
+        
+        .form-radio {
+            min-width: 1.25rem;
+            min-height: 1.25rem;
+        }
 
-<div class="py-12">
+        /* Improve spacing for mobile inputs */
+        input, select, textarea {
+            font-size: 16px !important; /* Prevent zoom on focus in iOS */
+        }
+
+        /* Better spacing for radio button labels */
+        .inline-flex {
+            padding: 0.5rem 0;
+        }
+    }
+</style>
+
+<div class="py-8 px-4 sm:py-12">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white overflow-hidden shadow-xl sm:rounded-xl">
-            <div class="p-6 lg:p-8 bg-white border-b border-gray-200">
+            <div class="p-4 sm:p-6 lg:p-8 bg-white border-b border-gray-200">
                 <div class="text-center mb-6">
-                    <img src="{{ asset('images/logo.png') }}" alt="CSU Logo" class="h-20 mx-auto mb-4">
-                    <h1 class="text-xl font-bold text-gray-800">CAGAYAN STATE UNIVERSITY</h1>
-                    <h2 class="text-lg font-semibold text-gray-700">APARRI CAMPUS</h2>
-                    <h3 class="text-md text-gray-600">Business and Resource Mobilization Office</h3>
-                    <h4 class="text-md font-semibold text-gray-800 mt-4">HELP US SERVE YOU BETTER!</h4>
+                    <img src="{{ asset('images/logo.png') }}" alt="CSU Logo" class="h-16 sm:h-20 mx-auto mb-4">
+                    <h1 class="text-lg sm:text-xl font-bold text-gray-800">CAGAYAN STATE UNIVERSITY</h1>
+                    <h2 class="text-base sm:text-lg font-semibold text-gray-700">APARRI CAMPUS</h2>
+                    <h3 class="text-sm sm:text-md text-gray-600">Business and Resource Mobilization Office</h3>
+                    <h4 class="text-base sm:text-md font-semibold text-gray-800 mt-4">HELP US SERVE YOU BETTER!</h4>
                 </div>
 
                 <div class="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
@@ -43,21 +67,21 @@
                     @csrf
 
                     <!-- Client Information -->
-                    <div class="space-y-6">
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 bg-gray-50 rounded-lg">
+                    <div class="space-y-4 sm:space-y-6">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4 bg-gray-50 rounded-lg">
                             <div>
                                 <label class="block text-sm font-medium text-gray-700">Client type:</label>
-                                <div class="mt-1 space-y-2">
+                                <div class="mt-2 space-y-2">
+                                        <label class="inline-flex items-center">
+                                            <input type="radio" name="client_type" value="citizen" class="form-radio h-5 w-5" required>
+                                            <span class="ml-2">Citizen</span>
+                                        </label>
                                     <label class="inline-flex items-center">
-                                        <input type="radio" name="client_type" value="citizen" class="form-radio" required>
-                                        <span class="ml-2">Citizen</span>
-                                    </label>
-                                    <label class="inline-flex items-center">
-                                        <input type="radio" name="client_type" value="business" class="form-radio">
+                                            <input type="radio" name="client_type" value="business" class="form-radio h-5 w-5">
                                         <span class="ml-2">Business</span>
                                     </label>
                                     <label class="inline-flex items-center">
-                                        <input type="radio" name="client_type" value="government" class="form-radio">
+                                            <input type="radio" name="client_type" value="government" class="form-radio h-5 w-5">
                                         <span class="ml-2">Government (Employee or another agency)</span>
                                     </label>
                                 </div>
@@ -68,11 +92,11 @@
                                     <label class="block text-sm font-medium text-gray-700">Sex:</label>
                                     <div class="mt-1 space-x-4">
                                         <label class="inline-flex items-center">
-                                            <input type="radio" name="sex" value="male" class="form-radio" required>
+                                            <input type="radio" name="sex" value="male" class="form-radio h-5 w-5" required>
                                             <span class="ml-2">Male</span>
                                         </label>
                                         <label class="inline-flex items-center">
-                                            <input type="radio" name="sex" value="female" class="form-radio">
+                                            <input type="radio" name="sex" value="female" class="form-radio h-5 w-5">
                                             <span class="ml-2">Female</span>
                                         </label>
                                     </div>
@@ -103,19 +127,19 @@
                                 <label class="block text-sm font-medium text-gray-700 mb-2">CC1. Which of the following best describes your awareness of CC?</label>
                                 <div class="space-y-2">
                                     <label class="flex items-center">
-                                        <input type="radio" name="cc1" value="1" class="form-radio" required>
+                                        <input type="radio" name="cc1" value="1" class="form-radio h-5 w-5" required>
                                         <span class="ml-2">I know what a CC is and I saw this office's CC.</span>
                                     </label>
                                     <label class="flex items-center">
-                                        <input type="radio" name="cc1" value="2" class="form-radio">
+                                        <input type="radio" name="cc1" value="2" class="form-radio h-5 w-5">
                                         <span class="ml-2">I know what a CC is and I did not see this office's CC.</span>
                                     </label>
                                     <label class="flex items-center">
-                                        <input type="radio" name="cc1" value="3" class="form-radio">
+                                        <input type="radio" name="cc1" value="3" class="form-radio h-5 w-5">
                                         <span class="ml-2">I learned of the CC only when I saw this office's CC.</span>
                                     </label>
                                     <label class="flex items-center">
-                                        <input type="radio" name="cc1" value="4" class="form-radio">
+                                        <input type="radio" name="cc1" value="4" class="form-radio h-5 w-5">
                                         <span class="ml-2">I do not know what a CC is and I did not see this office's CC.</span>
                                     </label>
                                 </div>
@@ -125,23 +149,23 @@
                                 <label class="block text-sm font-medium text-gray-700 mb-2">CC2. If aware of CC (answered 1-3 in CC1), would you say that the CC of this office was...?</label>
                                 <div class="space-y-2">
                                     <label class="flex items-center">
-                                        <input type="radio" name="cc2" value="1" class="form-radio">
+                                        <input type="radio" name="cc2" value="1" class="form-radio h-5 w-5">
                                         <span class="ml-2">Easy to see</span>
                                     </label>
                                     <label class="flex items-center">
-                                        <input type="radio" name="cc2" value="2" class="form-radio">
+                                        <input type="radio" name="cc2" value="2" class="form-radio h-5 w-5">
                                         <span class="ml-2">Somewhat easy to see</span>
                                     </label>
                                     <label class="flex items-center">
-                                        <input type="radio" name="cc2" value="3" class="form-radio">
+                                        <input type="radio" name="cc2" value="3" class="form-radio h-5 w-5">
                                         <span class="ml-2">Difficult to see</span>
                                     </label>
                                     <label class="flex items-center">
-                                        <input type="radio" name="cc2" value="4" class="form-radio">
+                                        <input type="radio" name="cc2" value="4" class="form-radio h-5 w-5">
                                         <span class="ml-2">Not visible at all</span>
                                     </label>
                                     <label class="flex items-center">
-                                        <input type="radio" name="cc2" value="na" class="form-radio">
+                                        <input type="radio" name="cc2" value="na" class="form-radio h-5 w-5">
                                         <span class="ml-2">N/A</span>
                                     </label>
                                 </div>
@@ -151,19 +175,19 @@
                                 <label class="block text-sm font-medium text-gray-700 mb-2">CC3. If aware of CC (answered codes 1-3 in CC1), how much did the CC help you in your transaction?</label>
                                 <div class="space-y-2">
                                     <label class="flex items-center">
-                                        <input type="radio" name="cc3" value="1" class="form-radio">
+                                        <input type="radio" name="cc3" value="1" class="form-radio h-5 w-5">
                                         <span class="ml-2">Helped very much</span>
                                     </label>
                                     <label class="flex items-center">
-                                        <input type="radio" name="cc3" value="2" class="form-radio">
+                                        <input type="radio" name="cc3" value="2" class="form-radio h-5 w-5">
                                         <span class="ml-2">Somewhat helped</span>
                                     </label>
                                     <label class="flex items-center">
-                                        <input type="radio" name="cc3" value="3" class="form-radio">
+                                        <input type="radio" name="cc3" value="3" class="form-radio h-5 w-5">
                                         <span class="ml-2">Did not help</span>
                                     </label>
                                     <label class="flex items-center">
-                                        <input type="radio" name="cc3" value="na" class="form-radio">
+                                        <input type="radio" name="cc3" value="na" class="form-radio h-5 w-5">
                                         <span class="ml-2">N/A</span>
                                     </label>
                                 </div>
@@ -191,7 +215,44 @@
                             ];
                             @endphp
 
-                            <table class="min-w-full divide-y divide-gray-200">
+                            <!-- Mobile view for service quality -->
+                            <div class="block sm:hidden">
+                                @foreach($questions as $key => $question)
+                                    <div class="mb-6 bg-gray-50 p-4 rounded-lg">
+                                        <p class="text-sm font-medium text-gray-900 mb-3">{{ $question }}</p>
+                                        <div class="grid grid-cols-3 gap-2">
+                                            <label class="flex flex-col items-center p-2 bg-white rounded-lg border border-gray-200">
+                                                <span class="text-xs mb-1">Strongly Disagree</span>
+                                                <input type="radio" name="{{ $key }}" value="1" class="form-radio h-4 w-4" {{ old($key) == '1' ? 'checked' : '' }} required>
+                                            </label>
+                                            <label class="flex flex-col items-center p-2 bg-white rounded-lg border border-gray-200">
+                                                <span class="text-xs mb-1">Disagree</span>
+                                                <input type="radio" name="{{ $key }}" value="2" class="form-radio h-4 w-4" {{ old($key) == '2' ? 'checked' : '' }} required>
+                                            </label>
+                                            <label class="flex flex-col items-center p-2 bg-white rounded-lg border border-gray-200">
+                                                <span class="text-xs mb-1">Neither</span>
+                                                <input type="radio" name="{{ $key }}" value="3" class="form-radio h-4 w-4" {{ old($key) == '3' ? 'checked' : '' }} required>
+                                            </label>
+                                            <label class="flex flex-col items-center p-2 bg-white rounded-lg border border-gray-200">
+                                                <span class="text-xs mb-1">Agree</span>
+                                                <input type="radio" name="{{ $key }}" value="4" class="form-radio h-4 w-4" {{ old($key) == '4' ? 'checked' : '' }} required>
+                                            </label>
+                                            <label class="flex flex-col items-center p-2 bg-white rounded-lg border border-gray-200">
+                                                <span class="text-xs mb-1">Strongly Agree</span>
+                                                <input type="radio" name="{{ $key }}" value="5" class="form-radio h-4 w-4" {{ old($key) == '5' ? 'checked' : '' }} required>
+                                            </label>
+                                            <label class="flex flex-col items-center p-2 bg-white rounded-lg border border-gray-200">
+                                                <span class="text-xs mb-1">N/A</span>
+                                                <input type="radio" name="{{ $key }}" value="na" class="form-radio h-4 w-4" {{ old($key) == 'na' ? 'checked' : '' }}>
+                                            </label>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+
+                            <!-- Desktop view -->
+                            <div class="hidden sm:block overflow-x-auto">
+                                <table class="min-w-full divide-y divide-gray-200">
                                 <thead class="bg-gray-50">
                                     <tr>
                                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Question</th>
@@ -208,27 +269,40 @@
                                     <tr>
                                         <td class="px-6 py-4 text-sm text-gray-900">{{ $question }}</td>
                                         <td class="px-6 py-4 text-center">
-                                            <input type="radio" name="{{ $key }}" value="1" class="form-radio" {{ old($key) == '1' ? 'checked' : '' }} required>
+                                            <label class="inline-flex items-center justify-center cursor-pointer">
+                                                <input type="radio" name="{{ $key }}" value="1" class="form-radio h-5 w-5" {{ old($key) == '1' ? 'checked' : '' }} required>
+                                            </label>
                                         </td>
                                         <td class="px-6 py-4 text-center">
-                                            <input type="radio" name="{{ $key }}" value="2" class="form-radio" {{ old($key) == '2' ? 'checked' : '' }} required>
+                                            <label class="inline-flex items-center justify-center cursor-pointer">
+                                                <input type="radio" name="{{ $key }}" value="2" class="form-radio h-5 w-5" {{ old($key) == '2' ? 'checked' : '' }} required>
+                                            </label>
                                         </td>
                                         <td class="px-6 py-4 text-center">
-                                            <input type="radio" name="{{ $key }}" value="3" class="form-radio" {{ old($key) == '3' ? 'checked' : '' }} required>
+                                            <label class="inline-flex items-center justify-center cursor-pointer">
+                                                <input type="radio" name="{{ $key }}" value="3" class="form-radio h-5 w-5" {{ old($key) == '3' ? 'checked' : '' }} required>
+                                            </label>
                                         </td>
                                         <td class="px-6 py-4 text-center">
-                                            <input type="radio" name="{{ $key }}" value="4" class="form-radio" {{ old($key) == '4' ? 'checked' : '' }} required>
+                                            <label class="inline-flex items-center justify-center cursor-pointer">
+                                                <input type="radio" name="{{ $key }}" value="4" class="form-radio h-5 w-5" {{ old($key) == '4' ? 'checked' : '' }} required>
+                                            </label>
                                         </td>
                                         <td class="px-6 py-4 text-center">
-                                            <input type="radio" name="{{ $key }}" value="5" class="form-radio" {{ old($key) == '5' ? 'checked' : '' }} required>
+                                            <label class="inline-flex items-center justify-center cursor-pointer">
+                                                <input type="radio" name="{{ $key }}" value="5" class="form-radio h-5 w-5" {{ old($key) == '5' ? 'checked' : '' }} required>
+                                            </label>
                                         </td>
                                         <td class="px-6 py-4 text-center">
-                                            <input type="radio" name="{{ $key }}" value="na" class="form-radio" {{ old($key) == 'na' ? 'checked' : '' }}>
+                                            <label class="inline-flex items-center justify-center cursor-pointer">
+                                                <input type="radio" name="{{ $key }}" value="na" class="form-radio h-5 w-5" {{ old($key) == 'na' ? 'checked' : '' }}>
+                                            </label>
                                         </td>
                                     </tr>
                                     @endforeach
                                 </tbody>
-                            </table>
+                                </table>
+                            </div>
                         </div>
                     </div>
 
@@ -261,7 +335,7 @@
                     </div>
 
                     <div class="flex justify-center">
-                        <button type="submit" class="inline-flex items-center px-6 py-3 bg-blue-600 border border-transparent rounded-md font-semibold text-sm text-white uppercase tracking-widest hover:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150 shadow-md">
+                        <button type="submit" class="w-full sm:w-auto inline-flex items-center px-6 py-3 bg-blue-600 border border-transparent rounded-md font-semibold text-sm text-white uppercase tracking-widest hover:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150 shadow-md">
                             Submit Feedback
                         </button>
                     </div>

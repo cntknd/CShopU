@@ -11,6 +11,13 @@
             <img src="{{ asset('images/logo.png') }}" alt="CShopU Logo" class="h-8 w-auto">
             <span class="text-white font-bold text-lg">CShopU</span>
         </div>
+        <!-- small animated subtitle beside logo (copied from welcome page) -->
+        <div class="hidden sm:flex items-center ms-4">
+            <span class="nav-subtitle text-white text-sm">One Stop Shop for your Campus</span>
+            <span class="typed-wrapper ms-2">
+                <span id="typed-text-nav" class="typed-text text-yellow-300"></span>
+            </span>
+        </div>
     </div>
 
     <!-- Navigation Links (Right) -->
@@ -123,6 +130,12 @@
                 <i class="bi bi-cart3 mr-1"></i>{{ __('Cart') }}
             </div>
         </x-responsive-nav-link>
+
+        <x-responsive-nav-link :href="route('orders.index')" :active="request()->routeIs('orders.index')" class="text-white hover:bg-red-700 font-bold">
+            <div class="inline-flex items-center">
+                <i class="bi bi-bag mr-1"></i>{{ __('Orders') }}
+            </div>
+        </x-responsive-nav-link>
     </div>
 
     <div class="pt-4 pb-1 border-t border-red-800">
@@ -157,3 +170,34 @@
 
 
 </nav>
+
+@push('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const navSubtitle = document.querySelector('.nav-subtitle');
+            if(document.getElementById('typed-text-nav')){
+                const typedNav = new Typed('#typed-text-nav', {
+                    strings: ["Products", "Services", "Needs."],
+                    typeSpeed: 40,
+                    backSpeed: 30,
+                    backDelay: 1000,
+                    startDelay: 200,
+                    loop: true,
+                    showCursor: true,
+                    cursorChar: "|",
+                    onStringTyped: function(pos, self) {
+                        if(self.strings[pos] === "Needs.") {
+                            if(navSubtitle) navSubtitle.style.color = '#b30000';
+                        } else {
+                            if(navSubtitle) navSubtitle.style.color = '#ffffff';
+                        }
+                    },
+                    onReset: function(self) {
+                        if(navSubtitle) navSubtitle.style.color = '#ffffff';
+                    }
+                });
+            }
+        });
+    </script>
+@endpush

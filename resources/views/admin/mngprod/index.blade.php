@@ -100,15 +100,167 @@
         font-size: 1rem;
     }
 
+    /* Form control base styles */
+    .form-control-modern {
+        width: 100%;
+        border: 1px solid #dee2e6;
+        border-radius: 6px;
+        padding: 0.5rem 0.75rem;
+        box-sizing: border-box;
+    }
+
+    .card-modern {
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 6px 18px rgba(0,0,0,0.04);
+        overflow: hidden;
+    }
+
+    .card-body-modern {
+        padding: 1rem;
+    }
+
+    .btn-primary-modern {
+        background: linear-gradient(135deg, #800000 0%, #a00000 100%);
+        color: #fff;
+        border: none;
+        padding: 0.6rem 0.9rem;
+        border-radius: 6px;
+    }
+
+    .btn-outline-modern {
+        background: transparent;
+        border: 1px solid #dee2e6;
+        padding: 0.45rem 0.75rem;
+        border-radius: 6px;
+        color: #333;
+    }
+
     /* Responsive adjustments */
     @media (max-width: 768px) {
         .form-row {
             grid-template-columns: 1fr;
             gap: 0.75rem;
         }
-        
+
         .size-grid {
             grid-template-columns: 1fr;
+        }
+
+        /* Reduce header card padding and radius on mobile */
+        .page-header .page-title {
+            font-size: 1.4rem;
+        }
+
+        .page-header {
+            padding: 0.6rem 0.8rem;
+        }
+
+        .card-modern {
+            margin: 0.5rem 0;
+            border-radius: 10px;
+        }
+
+        /* Make the two-column layout stack cleanly */
+        .col-md-4, .col-md-8 {
+            width: 100%;
+            max-width: 100%;
+            flex: 0 0 100%;
+        }
+
+        /* Improve touch targets */
+        .form-field input,
+        .form-field select,
+        .form-field textarea,
+        .btn-primary-modern,
+        .btn-outline-modern {
+            font-size: 16px;
+            padding: 0.65rem;
+        }
+
+        /* Stack action buttons and make them full-width */
+        .card-header-modern .d-flex .btn-outline-modern,
+        .card-header-modern .d-flex select {
+            display: inline-block;
+            margin-top: 0.4rem;
+        }
+
+        .table-modern thead th {
+            font-size: 0.85rem;
+        }
+
+        .table-modern td {
+            font-size: 0.9rem;
+        }
+
+        /* Avoid huge whitespace on top by reducing hero shadow/padding */
+        .card-header-compact {
+            padding: 0.6rem 0.9rem;
+            border-radius: 8px 8px 0 0;
+        }
+
+        /* Make profit display more compact */
+        #profit_display {
+            font-size: 0.95rem;
+            padding: 0.5rem;
+        }
+
+        /* Convert table to stacked cards on small screens */
+        .table-modern.table {
+            border-collapse: separate;
+        }
+
+        .table-modern thead {
+            display: none;
+        }
+
+        .table-modern tbody tr {
+            display: block;
+            margin-bottom: 0.9rem;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.04);
+            padding: 0.75rem;
+        }
+
+        .table-modern tbody tr td {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.45rem 0.5rem;
+            border: none;
+            font-size: 0.95rem;
+        }
+
+        .table-modern tbody tr td:before {
+            content: attr(data-label);
+            font-weight: 700;
+            color: #495057;
+            margin-right: 0.75rem;
+            flex: 0 0 45%;
+            text-transform: capitalize;
+            font-size: 0.85rem;
+        }
+
+        .table-modern tbody tr td .size-badge {
+            display: inline-block;
+            margin: 2px 4px 2px 0;
+        }
+
+        /* Actions stack and become full width */
+        .table-modern tbody tr td .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            width: 100%;
+        }
+
+        .table-modern tbody tr td .btn-group a,
+        .table-modern tbody tr td .btn-group button {
+            width: 100%;
+            display: block;
+            padding: 0.55rem 0.6rem;
+            text-align: center;
+            border-radius: 6px;
         }
     }
 
@@ -302,9 +454,9 @@
                             <tbody>
                                 @foreach($produktomo as $prod)
                                 <tr>
-                                    <td><strong>{{ $prod->name }}</strong></td>
-                                    <td>{{ $prod->description }}</td>
-                                    <td>
+                                    <td data-label="product"><strong>{{ $prod->name }}</strong></td>
+                                    <td data-label="description">{{ $prod->description }}</td>
+                                    <td data-label="category">
                                         @if($prod->category_id && $prod->category)
                                             <span class="badge-modern badge-primary-modern" data-category-id="{{ $prod->category->id }}">{{ $prod->category->name }}</span>
                                         @else
@@ -318,9 +470,9 @@
                                             @endif
                                         @endif
                                     </td>
-                                    <td><strong class="text-primary">₱{{ number_format($prod->supplier_price, 2) }}</strong></td>
-                                    <td><strong>₱{{ number_format($prod->price, 2) }}</strong></td>
-                                    <td>
+                                    <td data-label="supplier price"><strong class="text-primary">₱{{ number_format($prod->supplier_price, 2) }}</strong></td>
+                                    <td data-label="selling price"><strong>₱{{ number_format($prod->price, 2) }}</strong></td>
+                                    <td data-label="profit">
                                         @php
                                             $profit = $prod->price - $prod->supplier_price;
                                             $profitPercentage = $prod->supplier_price > 0 ? ($profit / $prod->supplier_price) * 100 : 0;
@@ -329,14 +481,14 @@
                                             ₱{{ number_format($profit, 2) }} ({{ number_format($profitPercentage, 1) }}%)
                                         </span>
                                     </td>
-                                    <td>
+                                    <td data-label="stock">
                                         @if($prod->has_size && $prod->sizes->count() > 0)
                                             <span class="badge-modern badge-info-modern">{{ $prod->sizes->sum('stock') }}</span>
                                         @else
                                             <span class="badge-modern badge-info-modern">{{ $prod->stock }}</span>
                                         @endif
                                     </td>
-                                    <td>
+                                    <td data-label="sizes">
                                         @if($prod->has_size && $prod->sizes->count() > 0)
                                             @foreach($prod->sizes as $size)
                                                 <span class="size-badge {{ $size->stock > 0 ? 'in-stock' : 'out-of-stock' }}">
@@ -347,7 +499,7 @@
                                             <span class="text-muted">—</span>
                                         @endif
                                     </td>
-                                    <td class="text-center">
+                                    <td class="text-center" data-label="actions">
                                         <div class="btn-group" role="group">
                                             <a href="{{ route('admin.manageproducts.edit', $prod->id) }}" class="btn-outline-modern btn-sm">Edit</a>
                                             <form action="{{ route('admin.manageproducts.destroy', $prod->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Delete this product?')">
