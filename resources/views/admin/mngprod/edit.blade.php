@@ -8,6 +8,25 @@
     <p class="page-subtitle">Update product information and manage its settings.</p>
 </div>
 
+<script>
+    function calculateProfit() {
+        const sellingPrice = parseFloat(document.getElementById('price').value) || 0;
+        const supplierPrice = parseFloat(document.getElementById('supplier_price').value) || 0;
+        const profit = sellingPrice - supplierPrice;
+        const profitPercent = supplierPrice !== 0 ? ((profit / supplierPrice) * 100).toFixed(2) : 0;
+        
+        document.getElementById('expected_profit').value = profit.toFixed(2) + ' ₱ (' + profitPercent + '%)';
+    }
+
+    // Add event listeners for both fields
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('price').addEventListener('input', calculateProfit);
+        document.getElementById('supplier_price').addEventListener('input', calculateProfit);
+    // Calculate initial profit
+    calculateProfit();
+    });
+</script>
+
 <style>
     .form-compact {
         padding: 1rem;
@@ -119,7 +138,80 @@
         .size-grid {
             grid-template-columns: 1fr;
         }
-    }
+
+            .form-compact {
+                padding: 0.75rem;
+            }
+
+            .form-field input,
+            .form-field select,
+            .form-field textarea {
+                font-size: 16px; /* Prevents iOS zoom on focus */
+                padding: 0.625rem;
+            }
+
+            .card-modern {
+                border-radius: 12px;
+                margin: 0.5rem;
+            }
+
+            /* Improve button layout on mobile */
+            .d-flex.gap-2.mt-3 {
+                flex-direction: column;
+                gap: 0.5rem !important;
+            }
+
+            .btn-primary-modern,
+            .btn-outline-modern {
+                width: 100%;
+                padding: 0.75rem;
+                margin: 0;
+            }
+
+            /* Adjust header spacing */
+            .page-header {
+                padding: 1rem;
+            }
+
+            .page-title {
+                font-size: 1.5rem;
+            }
+
+            .page-subtitle {
+                font-size: 0.9rem;
+            }
+
+            /* Make form fields taller on mobile for better touch targets */
+            .form-field label {
+                margin-bottom: 0.3rem;
+                font-size: 0.8rem;
+            }
+
+            .form-field input,
+            .form-field select {
+                height: 3rem;
+                margin-bottom: 0.5rem;
+            }
+
+            /* Improve spacing between sections */
+            .form-row {
+                margin-bottom: 1.25rem;
+            }
+
+            /* Make total stock display more prominent */
+            #total_stock_display {
+                text-align: center;
+                padding: 0.75rem;
+                margin-top: 1rem;
+                font-size: 1rem;
+            }
+
+            /* Improve file input appearance */
+            input[type="file"] {
+                padding: 0.5rem;
+                font-size: 0.9rem;
+            }
+        }
 </style>
 
 @if(session('success'))
@@ -149,7 +241,7 @@
                             @enderror
                         </div>
                         <div class="form-field">
-                            <label for="price">Price (₱)</label>
+                            <label for="price">Selling Price (₱)</label>
                             <input type="number" name="price" id="price" value="{{ old('price', $selected_prod->price) }}" class="form-control-modern" step="0.01" required>
                             @error('price')
                                 <small class="text-danger">{{ $message }}</small>
@@ -157,7 +249,24 @@
                         </div>
                     </div>
 
-                    <!-- Row 2: Description & Category -->
+                    <!-- Row 2: Supplier Price & Expected Profit -->
+                    <div class="form-row">
+                        <div class="form-field">
+                            <label for="supplier_price">Supplier Price (₱)</label>
+                            <input type="number" name="supplier_price" id="supplier_price" value="{{ old('supplier_price', $selected_prod->supplier_price) }}" class="form-control-modern" step="0.01" required oninput="calculateProfit()">
+                            <small class="text-muted">Cost price from supplier</small>
+                            @error('supplier_price')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                        <div class="form-field">
+                            <label>Expected Profit</label>
+                            <input type="text" id="expected_profit" class="form-control-modern" readonly>
+                            <small class="text-muted">Calculated automatically</small>
+                        </div>
+                    </div>
+
+                    <!-- Row 3: Description & Category -->
                     <div class="form-row">
                         <div class="form-field">
                             <label for="description">Description</label>

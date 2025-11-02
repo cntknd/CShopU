@@ -60,6 +60,8 @@
                             <div class="flex flex-col">
                                 <span class="text-lg font-medium text-gray-900">{{ $item['name'] }}</span>
                                 <span class="text-base text-gray-700">₱{{ number_format($item['price'], 2) }}</span>
+                    <span class="text-sm text-gray-500 mt-1">Item total: <strong>₱{{ number_format($total, 2) }}</strong></span>
+                                {{-- Removed the overall Total price per item to match the image --}}
                             </div>
 
                             <div class="flex flex-col sm:flex-row items-start sm:items-center sm:space-x-4 mt-3 sm:mt-0">
@@ -176,6 +178,23 @@
                 </div>
             </div>
         </div>
+        <!-- Mobile sticky checkout bar -->
+        <div class="mobile-checkout-bar d-block d-md-none" style="display:none">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="bg-white border-t border-gray-200 p-3 rounded-t-lg shadow-lg flex items-center justify-between" style="gap:0.75rem">
+                    <div>
+                        <div class="text-sm text-gray-600">Total</div>
+                        <div class="text-lg font-bold">₱{{ number_format($grandTotal, 2) }}</div>
+                    </div>
+                    <form id="mobile-checkout-form" action="{{ route('user.cart.checkout') }}" method="POST">
+                        @csrf
+                        <button type="submit" class="checkout-btn bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md font-semibold">
+                            Checkout
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
         
     @else
         {{-- Empty Cart Message --}}
@@ -219,6 +238,82 @@
     .size-select.border-red-500 {
         border-color: #f87171 !important;
         box-shadow: 0 0 0 1px #f87171;
+    }
+
+    /* Mobile-specific cart adjustments */
+    @media (max-width: 768px) {
+        .cart-item {
+            flex-direction: column;
+            align-items: stretch;
+            gap: 0.75rem;
+        }
+
+        .cart-item img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            border-radius: 8px;
+            margin: 0 0 0.5rem 0;
+        }
+
+        .cart-item .flex-grow {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        /* Place details above controls and make controls full-width */
+        .cart-item .flex.items-center.space-x-4 {
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            gap: 0.5rem;
+            margin-top: 0.25rem;
+        }
+
+        .cart-item .w-32 {
+            width: 100% !important;
+        }
+
+        .cart-item .flex.items-center.space-x-2 {
+            width: 100%;
+            justify-content: space-between;
+            padding: 0.5rem;
+            border-radius: 8px;
+        }
+
+        .cart-item .quantity-display {
+            min-width: 40px;
+        }
+
+        .cart-item form.inline,
+        .cart-item .backup-inline {
+            display: inline-block;
+        }
+
+        /* Make increment/decrement buttons larger/tappable */
+        .cart-item button[type="submit"],
+        .cart-item .increment-btn,
+        .cart-item a[onclick],
+        .cart-item .text-gray-400 {
+            padding: 0.6rem;
+            border-radius: 8px;
+        }
+
+        /* Move remove icon to the end of the item for clarity */
+        .cart-item a[onclick] {
+            align-self: flex-end;
+        }
+
+        /* Summary card spacing on mobile */
+        .lg\:col-span-1 { /* utility escape for class used in markup */
+            width: 100%;
+        }
+
+        .checkout-btn {
+            padding: 0.9rem 1rem;
+            font-size: 1rem;
+        }
     }
 </style>
 

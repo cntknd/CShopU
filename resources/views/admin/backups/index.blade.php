@@ -7,17 +7,24 @@
     <p class="page-subtitle">Manage your system backups and data protection.</p>
 </div>
 <div class="backup-actions mb-4">
-    <div class="row">
+    <div class="row g-3">
         <div class="col-md-8">
-            <div class="btn-group" role="group">
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createBackupModal"><i class="bi bi-plus-circle me-2"></i>Create Backup</button>
-                <button type="button" class="btn btn-warning" onclick="cleanupBackups()" data-original-text="<i class='bi bi-trash me-2'></i>Cleanup Old Backups"><i class="bi bi-trash me-2"></i>Cleanup Old Backups</button>
-                <button type="button" class="btn btn-info" onclick="refreshBackups()" data-original-text="<i class='bi bi-arrow-clockwise me-2'></i>Refresh"><i class="bi bi-arrow-clockwise me-2"></i>Refresh</button>
+            <div class="d-flex flex-column flex-md-row gap-2">
+                <button type="button" class="btn btn-primary d-flex align-items-center justify-content-center" data-bs-toggle="modal" data-bs-target="#createBackupModal">
+                    <i class="bi bi-plus-circle me-2"></i>Create Backup
+                </button>
+                <button type="button" class="btn btn-warning d-flex align-items-center justify-content-center" onclick="cleanupBackups()">
+                    <i class="bi bi-trash me-2"></i><span class="d-none d-md-inline">Cleanup</span><span class="d-md-none">Clean Old Backups</span>
+                </button>
+                <button type="button" class="btn btn-info d-flex align-items-center justify-content-center" onclick="refreshBackups()">
+                    <i class="bi bi-arrow-clockwise me-2"></i><span class="d-none d-md-inline">Refresh</span><span class="d-md-none">Refresh List</span>
+                </button>
             </div>
         </div>
         <div class="col-md-4">
-            <div class="backup-stats text-end">
-                <small class="text-muted"><span id="total-backups">-</span> total backups | <span id="total-size">-</span> total size</small>
+            <div class="backup-stats text-md-end">
+                <small class="text-muted d-block"><i class="bi bi-hdd me-1"></i><span id="total-backups">-</span> total backups</small>
+                <small class="text-muted d-block"><i class="bi bi-archive me-1"></i><span id="total-size">-</span> total size</small>
             </div>
         </div>
     </div>
@@ -47,7 +54,51 @@
     <div class="tab-pane fade {{ $type === 'manual' ? 'show active' : '' }}" id="{{ $type }}" role="tabpanel">
         <div class="backup-list">
             @if(count($groupedBackups[$type]) > 0)
-                <div class="table-responsive">
+                <style>
+                    @media (max-width: 767.98px) {
+                        .backup-card {
+                            background: var(--bs-light);
+                            border-radius: 8px;
+                            padding: 1rem;
+                            margin-bottom: 1rem;
+                            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+                        }
+                        .backup-card .badge {
+                            font-size: 0.8rem;
+                            padding: 0.35em 0.65em;
+                        }
+                        .backup-card code {
+                            font-size: 0.875rem;
+                            word-break: break-all;
+                        }
+                        .backup-meta {
+                            display: flex;
+                            flex-wrap: wrap;
+                            gap: 0.75rem;
+                            margin: 0.5rem 0;
+                            font-size: 0.875rem;
+                            color: var(--bs-secondary);
+                        }
+                        .backup-meta i {
+                            margin-right: 0.25rem;
+                        }
+                        .backup-actions {
+                            display: flex;
+                            gap: 0.5rem;
+                            margin-top: 1rem;
+                        }
+                        .backup-actions .btn {
+                            flex: 1;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            gap: 0.5rem;
+                            padding: 0.5rem;
+                        }
+                    }
+                </style>
+                <!-- Desktop view -->
+                <div class="table-responsive d-none d-md-block">
                     <table class="table-modern table">
                         <thead>
                             <tr>
@@ -66,9 +117,7 @@
                                         {{ ucfirst($backup['category']) }}
                                     </span>
                                 </td>
-                                <td>
-                                    <code>{{ $backup['filename'] }}</code>
-                                </td>
+                                <td><code>{{ $backup['filename'] }}</code></td>
                                 <td>{{ \App\Services\BackupService::formatBytes($backup['size']) }}</td>
                                 <td>{{ \Carbon\Carbon::parse($backup['created_at'])->format('M d, Y H:i') }}</td>
                                 <td>
@@ -87,6 +136,37 @@
                             @endforeach
                         </tbody>
                     </table>
+                </div>
+                <!-- Mobile view -->
+                <div class="d-md-none">
+                    @foreach($groupedBackups[$type] as $backup)
+                    <div class="backup-card">
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="badge bg-{{ $backup['category'] === 'database' ? 'primary' : 'success' }}">
+                                {{ ucfirst($backup['category']) }}
+                            </span>
+                        </div>
+                        <div class="mt-2">
+                            <code>{{ $backup['filename'] }}</code>
+                        </div>
+                        <div class="backup-meta">
+                            <span><i class="bi bi-hdd"></i>{{ \App\Services\BackupService::formatBytes($backup['size']) }}</span>
+                            <span><i class="bi bi-calendar"></i>{{ \Carbon\Carbon::parse($backup['created_at'])->format('M d, Y H:i') }}</span>
+                        </div>
+                        <div class="backup-actions">
+                            <a href="{{ route('admin.backups.download', ['filename' => $backup['filename'], 'category' => $backup['category']]) }}" 
+                               class="btn btn-outline-modern">
+                                <i class="bi bi-download"></i>
+                                <span>Download</span>
+                            </a>
+                            <button type="button" class="btn btn-danger-modern" 
+                                    onclick="deleteBackup('{{ $backup['filename'] }}', '{{ $backup['category'] }}')">
+                                <i class="bi bi-trash"></i>
+                                <span>Delete</span>
+                            </button>
+                        </div>
+                    </div>
+                    @endforeach
                 </div>
             @else
                 <div class="text-center py-5">
@@ -196,6 +276,106 @@
     border: none;
     font-weight: 600;
     color: #333;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    /* Stack action buttons */
+    .backup-actions .btn-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        width: 100%;
+    }
+    
+    .backup-actions .btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    /* Adjust stats position */
+    .backup-stats {
+        text-align: left;
+        padding-top: 1rem;
+    }
+    
+    /* Make tabs scrollable horizontally */
+    .nav-tabs {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        white-space: nowrap;
+        padding-bottom: 5px;
+    }
+    
+    .nav-tabs .nav-item {
+        margin-bottom: 0;
+    }
+    
+    /* Convert table to cards */
+    .table-modern thead {
+        display: none;
+    }
+    
+    .table-modern tbody tr {
+        display: block;
+        margin-bottom: 1rem;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        padding: 1rem;
+    }
+    
+    .table-modern tbody td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.5rem 0;
+        border: none;
+        font-size: 0.9rem;
+    }
+    
+    .table-modern tbody td:before {
+        content: attr(data-label);
+        font-weight: 600;
+        margin-right: 1rem;
+        color: #495057;
+    }
+    
+    /* Style action buttons */
+    .table-modern .btn-group-sm {
+        display: flex;
+        gap: 0.5rem;
+        width: 100%;
+    }
+    
+    .table-modern .btn-group-sm .btn {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.5rem;
+    }
+    
+    .table-modern .btn-group-sm .btn i {
+        margin-right: 0.25rem;
+    }
+    
+    /* Make code elements wrap */
+    code {
+        white-space: normal;
+        word-break: break-all;
+    }
+    
+    /* Adjust modals for mobile */
+    .modal-dialog {
+        margin: 0.5rem;
+    }
+    
+    .modal-content {
+        border-radius: 12px;
+    }
 }
 
 .table td {

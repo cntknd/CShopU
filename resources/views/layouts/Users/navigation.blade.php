@@ -130,6 +130,12 @@
                 <i class="bi bi-cart3 mr-1"></i>{{ __('Cart') }}
             </div>
         </x-responsive-nav-link>
+
+        <x-responsive-nav-link :href="route('orders.index')" :active="request()->routeIs('orders.index')" class="text-white hover:bg-red-700 font-bold">
+            <div class="inline-flex items-center">
+                <i class="bi bi-bag mr-1"></i>{{ __('Orders') }}
+            </div>
+        </x-responsive-nav-link>
     </div>
 
     <div class="pt-4 pb-1 border-t border-red-800">

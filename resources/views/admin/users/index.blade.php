@@ -37,6 +37,23 @@
     padding: 1.5rem;
     margin-bottom: 1rem;
 }
+
+/* Responsive: convert users table into stacked cards on small screens */
+@media (max-width: 768px) {
+    .table-modern thead { display: none; }
+    .table-modern tbody tr { display: block; margin-bottom: 0.9rem; background: #fff; border-radius: 10px; box-shadow: 0 6px 18px rgba(0,0,0,0.04); padding: 0.75rem; }
+    .table-modern tbody tr td { display: flex; justify-content: space-between; padding: 0.45rem 0.5rem; border: none; font-size: 0.95rem; }
+    .table-modern tbody tr td:before { content: attr(data-label); font-weight: 700; color: #495057; margin-right: 0.75rem; flex: 0 0 45%; text-transform: capitalize; font-size: 0.85rem; }
+    .table-modern tbody tr td .badge { margin: 0; }
+
+    /* Actions: stack and full width */
+    .table-modern tbody tr td .btn-group { display:flex; flex-direction:column; gap:0.5rem; width:100%; }
+    .table-modern tbody tr td .btn-group a, .table-modern tbody tr td .btn-group button { width:100%; display:block; padding:0.55rem 0.6rem; text-align:center; border-radius:6px; }
+
+    /* Improve form layout on small screens */
+    .row.g-3 { gap: 0.75rem; }
+    .col-md-6, .col-md-4, .col-md-2 { flex:0 0 100%; max-width:100%; }
+}
 </style>
 <div class="user-card p-4 mb-4">
     <!-- Search and Filter Section -->
@@ -101,9 +118,9 @@
             <tbody>
                 @forelse($allusers as $user)
                 <tr>
-                    <td class="fw-semibold">{{ $user->name }}</td>
-                    <td>{{ $user->email }}</td>
-                    <td>
+                    <td data-label="name" class="fw-semibold">{{ $user->name }}</td>
+                    <td data-label="email">{{ $user->email }}</td>
+                    <td data-label="roles">
                         @if($user->roles()->count() > 0)
                             @foreach($user->roles as $role)
                                 <span class="badge bg-primary">{{ $role->name }}</span>
@@ -112,8 +129,8 @@
                             <span class="badge bg-secondary">User</span>
                         @endif
                     </td>
-                    <td class="small text-muted">{{ date('M d, Y h:i A', strtotime($user->created_at)) }}</td>
-                    <td class="text-center">
+                    <td data-label="created" class="small text-muted">{{ date('M d, Y h:i A', strtotime($user->created_at)) }}</td>
+                    <td data-label="actions" class="text-center">
                         <div class="btn-group" role="group">
                             <a href="{{ route('admin.users.show', $user->id) }}" class="btn btn-sm btn-outline-modern" title="View Details">
                                 <i class="bi bi-eye"></i>

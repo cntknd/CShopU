@@ -149,6 +149,7 @@ class ProdCtrl extends Controller
     $product->name = $request->input('name');
     $product->description = $request->input('description');
     $product->price = $request->input('price');
+    $product->supplier_price = $request->input('supplier_price');
     $product->has_size = $request->has_size;
     $product->category_id = $request->input('category_id');
 
