@@ -8,24 +8,8 @@
     .hero {
         padding: 6rem 10% !important;
         min-height: 60vh !important;
-        position: relative;
-        overflow: hidden;
-        /* external maroon glow */
-        box-shadow: 0 24px 80px rgba(128,0,0,0.22);
+        background-blend-mode: overlay;
     }
-
-    /* maroon overlay tint over the background image (keeps content readable) */
-    .hero::before {
-        content: '';
-        position: absolute;
-        inset: 0;
-        background: rgba(128,0,0,0.20);
-        mix-blend-mode: multiply;
-        pointer-events: none;
-        z-index: 1;
-    }
-
-    .hero-inner { position: relative; z-index: 2; }
     .hero-title {
         font-size: 70px;
         font-weight: 900;
@@ -45,19 +29,11 @@
     /* Top product image minor responsive tweak */
     .top-prod-img { width: 6rem; height: 6rem; object-fit: cover; }
     @media (max-width:640px) { .top-prod-img { width: 5rem; height: 5rem; } }
-
-    /* Stronger shop now shadow */
-    .shopnow-shadow {
-        box-shadow: 0 12px 36px rgba(0,0,0,0.45);
-    }
-    .shopnow-shadow:hover {
-        box-shadow: 0 18px 48px rgba(0,0,0,0.55);
-    }
 </style>
 
 <!-- Hero Section (homepage style) -->
-<section class="hero relative text-center text-white bg-cover bg-center" style="background-image: url('{{ asset("images/building.jpg") }}'); background-size: cover; background-position: center; background-repeat: no-repeat;">
-    <div class="hero-inner max-w-4xl mx-auto px-4 py-20 sm:py-28 lg:py-36">
+<section class="hero relative text-center text-white bg-cover bg-center" style="background-image: linear-gradient(rgba(128,0,0,0.45), rgba(128,0,0,0.45)), url('{{ asset("images/building.jpg") }}'); background-blend-mode: overlay;">
+    <div class="max-w-4xl mx-auto px-4 py-20 sm:py-28 lg:py-36">
         <h1 class="hero-title mb-4 text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-extrabold text-yellow-400 leading-tight drop-shadow-lg">
             Welcome back, <span class="block sm:inline">{{ Auth::user()->first_name }}</span>
         </h1>
@@ -69,8 +45,8 @@
             </span>
         </p>
 
-        <a href="{{ route('user.products.index') }}" class="inline-block bg-red-900 text-white font-semibold py-2 px-6 sm:py-3 sm:px-6 rounded-full shopnow-shadow transition-transform hover:scale-105 hover:bg-red-700 text-sm sm:text-base">
-            Shop Now
+        <a href="{{ route('user.products.index') }}" class="inline-block bg-yellow-400 text-gray-900 font-semibold py-2.5 px-5 sm:py-3 sm:px-6 rounded-full shadow-md hover:shadow-lg transition-transform hover:scale-105 text-sm sm:text-base">
+            🛒 Shop Now
         </a>
     </div>
 </section>

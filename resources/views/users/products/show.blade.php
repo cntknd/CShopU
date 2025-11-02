@@ -20,7 +20,8 @@
 
                 <div class="mt-6 flex flex-col sm:flex-row items-start sm:items-center gap-3">
                     @if($product->stock > 0)
-                        <form action="{{ route('user.cart.add', $product->id) }}" method="POST">
+                        {{-- use the correctly namespaced route for user cart add (POST) --}}
+                        <form action="{{ route('user.cart.add', $product->id) }}" method="POST" class="w-full sm:w-auto">
                             @csrf
                             <button type="submit" class="w-full sm:w-auto inline-flex items-center gap-2 justify-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded">
                                 <i class="bi bi-cart-plus"></i> Add to Cart

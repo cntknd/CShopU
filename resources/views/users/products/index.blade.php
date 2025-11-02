@@ -156,7 +156,12 @@
                     </span>
                 </div>
 
-                                <!-- Add to Cart Button -->
+                <!-- View + Add to Cart Buttons -->
+                <div class="mb-3">
+                    <a href="{{ route('user.products.show', $product->id) }}" class="text-sm text-blue-600 hover:underline inline-block mb-2">View</a>
+                </div>
+
+                <!-- Add to Cart Button -->
                 @if($totalStock > 0)
                     <form action="{{ route('user.cart.add', $product->id) }}" method="POST">
                         @csrf

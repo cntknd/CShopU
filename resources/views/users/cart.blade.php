@@ -60,8 +60,6 @@
                             <div class="flex flex-col">
                                 <span class="text-lg font-medium text-gray-900">{{ $item['name'] }}</span>
                                 <span class="text-base text-gray-700">₱{{ number_format($item['price'], 2) }}</span>
-                    <span class="text-sm text-gray-500 mt-1">Item total: <strong>₱{{ number_format($total, 2) }}</strong></span>
-                                {{-- Removed the overall Total price per item to match the image --}}
                             </div>
 
                             <div class="flex flex-col sm:flex-row items-start sm:items-center sm:space-x-4 mt-3 sm:mt-0">
