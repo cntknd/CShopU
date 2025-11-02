@@ -110,7 +110,7 @@
         <div class="bg-white rounded-lg overflow-hidden border border-gray-200 hover:shadow-lg transition-shadow duration-200">
 
             <!-- Product Image -->
-            <div class="w-full bg-gray-50 h-64 sm:h-48 md:h-40 lg:h-48">
+            <div class="relative w-full bg-gray-50 h-64 sm:h-48 md:h-40 lg:h-48">
                 <img 
                     src="{{ asset('images/'.$product->image) }}" 
                     alt="{{ $product->name }}" 
