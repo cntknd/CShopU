@@ -2,7 +2,7 @@
     @scroll.window="scrolled = (window.pageYOffset > 20)"
     :class="{'bg-red-900/95 shadow-lg': scrolled, 'bg-red-900': !scrolled }"
     class="sticky top-0 w-full left-0 z-50 border-b border-red-800 transition-all duration-300">
-    
+
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 <div class="flex justify-between h-16">
     <!-- Logo Section (Left) -->
@@ -13,7 +13,7 @@
         </div>
         <!-- small animated subtitle beside logo (copied from welcome page) -->
         <div class="hidden sm:flex items-center ms-4">
-            <span class="nav-subtitle text-white text-sm">One Stop Shop for your Campus</span>
+            {{-- <span class="nav-subtitle text-white text-sm">One Stop Shop for your Campus</span> --}}
             <span class="typed-wrapper ms-2">
                 <span id="typed-text-nav" class="typed-text text-yellow-300"></span>
             </span>

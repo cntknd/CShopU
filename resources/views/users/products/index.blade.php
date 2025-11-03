@@ -110,14 +110,14 @@
         <div class="bg-white rounded-lg overflow-hidden border border-gray-200 hover:shadow-lg transition-shadow duration-200">
 
             <!-- Product Image -->
-            <div class="relative w-full bg-gray-50 h-64 sm:h-48 md:h-40 lg:h-48">
-                <img 
-                    src="{{ asset('images/'.$product->image) }}" 
-                    alt="{{ $product->name }}" 
-                    class="w-full h-full object-cover"
+            <div class="relative w-full bg-gray-50 h-48">
+                <img
+                    src="{{ asset('images/'.$product->image) }}"
+                    alt="{{ $product->name }}"
+                    class="w-full h-full object-cover object-center"
                 />
                 @php
-                    $totalStock = $product->sizes->count() > 0 
+                    $totalStock = $product->sizes->count() > 0
                         ? $product->sizes->sum('stock')
                         : $product->stock;
                 @endphp
@@ -131,7 +131,7 @@
             <!-- Product Info -->
             <div class="p-4">
                 <h2 class="text-sm font-normal text-gray-900 mb-1 line-clamp-2" style="min-height: 2.5rem;">{{ $product->name }}</h2>
-                
+
                 <!-- Price -->
                 <div class="mb-2">
                     <span class="text-base font-semibold text-gray-900">₱{{ number_format($product->price, 2) }}</span>
@@ -140,7 +140,7 @@
                 <!-- Stock Display -->
                 <div class="mb-3 flex items-center text-sm">
                     @php
-                        $totalStock = $product->sizes->count() > 0 
+                        $totalStock = $product->sizes->count() > 0
                             ? $product->sizes->sum('stock')
                             : $product->stock;
                     @endphp
@@ -157,23 +157,23 @@
                 </div>
 
                 <!-- View + Add to Cart Buttons -->
-                <div class="mb-3">
+                {{-- <div class="mb-3">
                     <a href="{{ route('user.products.show', $product->id) }}" class="text-sm text-blue-600 hover:underline inline-block mb-2">View</a>
-                </div>
+                </div> --}}
 
                 <!-- Add to Cart Button -->
                 @if($totalStock > 0)
                     <form action="{{ route('user.cart.add', $product->id) }}" method="POST">
                         @csrf
-                        <button 
-                            type="submit" 
+                        <button
+                            type="submit"
                             class="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-md transition-colors duration-200 text-sm"
                         >
                             Add to Cart
                         </button>
                     </form>
                 @else
-                    <button 
+                    <button
                         class="w-full py-2.5 bg-gray-200 text-gray-500 font-medium rounded-md cursor-not-allowed text-sm"
                         disabled
                     >
@@ -182,7 +182,7 @@
                 @endif
 
                 <!-- View Details Button -->
-                <a href="{{ route('user.products.show', ['id' => $product->id]) }}" 
+                <a href="{{ route('user.products.show', ['id' => $product->id]) }}"
                    class="w-full inline-block text-center mt-2 py-2 border border-blue-600 text-blue-600 rounded-md hover:bg-blue-50 text-sm transition">
                    View Details
                 </a>
